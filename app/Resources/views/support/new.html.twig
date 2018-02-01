@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-8">
+            <h3 class="my-5 text-muted">SIGMAP 2018 - {{ user.name }} {{ user.surname }}<small><br>Support application form</small></h3>
+
+            {{ form_start(form) }}
+            <div class="form-group">
+                <label for="inputType"><strong>Kind of support requested</strong></label>
+                <span class="text-danger">{{ form_errors(form.type) }}</span>
+                {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="inputStudies"><strong>Level of your current studies</strong></label>
+                <span class="text-danger">{{ form_errors(form.studies) }}</span>
+                {{ form_widget(form.studies, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="inputReasons"><strong>Your reasons to attend SIGMAP 2018</strong></label>
+                <span class="text-danger">{{ form_errors(form.reasons) }}</span>
+                {{ form_widget(form.reasons, {'attr': {'class': 'form-control', 'rows':'4'}}) }}
+            </div>
+
+
+            {{ form_widget(form) }}
+
+
+            <input class="btn btn-primary" type="submit" value="Submit" />
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

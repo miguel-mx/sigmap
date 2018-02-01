@@ -1,0 +1,104 @@
+
+<h1></h1>
+<h2>SIGMAP 2018 <small class="text-muted">Registry form</small></h2>
+</div>
+
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+
+    <div class="row">
+        <div class="col-8">
+
+            <hr>
+            {#<div class="alert alert-danger" role="alert">#}
+                {#{{ form_errors(form) }}#}
+            {#</div>#}
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputUsername">User name</label>
+                        <span class="text-danger">{{ form_errors(form.username) }}</span>
+                        {{ form_widget(form.username, {'attr': {'class': 'form-control', 'aria-describedby': 'userHelp'}}) }}
+                        {#<input type="text" class="form-control" id="inputUsername" aria-describedby="userHelp" placeholder="username">#}
+                        <small id="userHelp" class="form-text text-muted">This will be your login username.</small>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputEmail">Email</label>
+                        <span class="text-danger">{{ form_errors(form.email) }}</span>
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                        {#<small id="emailHelp" class="form-text text-muted">Valid email.</small>#}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <span class="text-danger">{{ form_errors(form.plainPassword.first) }}</span>
+                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                <label for="inputPasswordConfirmation">Repeat Password</label>
+                <span class="text-danger">{{ form_errors(form.plainPassword.second) }}</span>
+                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputName">Name</label>
+                        <span class="text-danger">{{ form_errors(form.name) }}</span>
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputName">Surname</label>
+                        <span class="text-danger">{{ form_errors(form.surname) }}</span>
+                        {{ form_widget(form.surname, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10">
+                    <div class="form-group">
+                        <label for="inputCitizenship">Citizenship</label>
+                        <span class="text-danger">{{ form_errors(form.citizenship) }}</span>
+                        {{ form_widget(form.citizenship, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="inputGender">Gender</label>
+                        <span class="text-danger">{{ form_errors(form.gender) }}</span>
+                        {{ form_widget(form.gender, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <div class="form-group">
+                        <label for="inputAffiliation">Affiliation</label>
+                        <span class="text-danger">{{ form_errors(form.affiliation) }}</span>
+                        {{ form_widget(form.affiliation, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="inputStudent">Are you a student?</label>
+                        <span class="text-danger">{{ form_errors(form.student) }}</span>
+                        {{ form_widget(form.student, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                </div>
+            </div>
+
+            {{ form_widget(form) }}
+            <div>
+                <input type="submit" class="btn btn-success" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+            </div>
+        </div>
+    </div>
+</form>

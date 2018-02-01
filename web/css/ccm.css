@@ -1,0 +1,5 @@
+.jumbotron {
+    background-color: #fff;
+    margin-bottom: 0;
+    padding-top: calc(var(--jumbotron-padding-y) * 2);
+}

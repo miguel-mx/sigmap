@@ -1,0 +1,26 @@
+<div class="mt-3">
+
+<h4 class="border-bottom my-5 py-3">SIGMAP 2018<small> -  Password reset</small></h4>
+
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="fos_user_change_password_form_new_first" class="required">New password</label>
+                {{ form_widget(form.new.first, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="fos_user_change_password_form_new_second" class="required">Repeat new password</label>
+                {{ form_widget(form.new.second, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    {{ form_widget(form) }}
+    <div>
+        <input class="btn btn-primary" type="submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
+    </div>
+</form>

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Support</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ support.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ support.type }}</td>
+            </tr>
+            <tr>
+                <th>Studies</th>
+                <td>{{ support.studies }}</td>
+            </tr>
+            <tr>
+                <th>Reasons</th>
+                <td>{{ support.reasons }}</td>
+            </tr>
+            <tr>
+                <th>Approved</th>
+                <td>{% if support.approved %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Applieddate</th>
+                <td>{% if support.appliedDate %}{{ support.appliedDate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('support_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('support_edit', { 'id': support.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

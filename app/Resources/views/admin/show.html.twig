@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+        <div class="container">
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="alert alert-success" role="alert">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+
+            {#<section class="jumbotron text-center">#}
+                {#<div class="dash-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">#}
+                    {#<h1 class="display-4 text-muted">SIGMAP 2018</h1>#}
+                    {#<p class="lead">#}
+                        {#<span class="text-muted">Monday June 25th to Friday June 29th, 2018.</span><br><br>#}
+
+                        {#The edition 2018 of the workshop Symmetries in Graphs, Maps and Polytopes (SIGMAP) will be held at the Campus in Morelia of the National Autonomous University of Mexico.#}
+                    {#</p>#}
+                {#</div>#}
+            {#</section>#}
+
+            <a href="{{ path('admin_index') }}">Back</a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-3">
+                        <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b></h5></div>
+                        <div class="card-body text-secondary">
+                            {{ user.affiliation }}<br>
+                            {{ user.citizenship }}<br>
+                            Student: {{ user.student ? 'Yes': 'No' }}<br>
+                            Arrival date: {{ user.arrival ? user.arrival|date('Y-m-d') : 'Not set' }}<br>
+                            Departure date: {{ user.arrival ? user.departure|date('Y-m-d') : 'Not set' }}<br>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3 text-primary"><b>Finantial support</b></h5>
+                    {% if user.student %}
+                        {% if user.support %}
+
+                            {{ user.support.type }}<br>
+                            {{ user.support.studies }}<br>
+
+                            ** Botón evaluar
+
+                        {% else %}
+                            <p class="my-1 text-muted">
+                                No
+                            </p>
+
+                        {% endif %}
+                    {% else %}
+
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-md-12">
+                    <h5 class="mb-3 text-primary"><b>Talk Proposal</b></h5>
+
+                    {#{% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}#}
+
+                    {% if user.abstract %}
+
+                        <h3 class="mt-4 py-2 border-bottom">{{ user.title }}</h3>
+                        <p class="my-3">
+                        <h5 class="text-muted">Abstract</h5>
+                        {{ user.abstract|raw }}
+                        </p>
+                        <p>** Botón evaluar</p>
+                    {% else %}
+                        No
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Talk Modal -->
+            <div class="modal fade" id="talkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Abstract submission</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% render controller("AppBundle:User:talkEdit", {'slug': user.slug}) %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% block javascripts %}
+
+        {{ parent() }}
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+        <script type="text/javascript" async
+                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    {% endblock %}
+{% endblock %}

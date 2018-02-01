@@ -1,0 +1,17 @@
+{{ form_start(edit_form, {'action': path('talk-edit', { 'slug': user.slug })}) }}
+
+    <div class="form-group">
+        <label for="inputTitle">Title</label>
+        <span class="text-danger">{{ form_errors(edit_form.title) }}</span>
+        {{ form_widget(edit_form.title, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        <label for="inputAbstract">Abstract</label>
+        <span class="text-danger">{{ form_errors(edit_form.abstract) }}</span>
+        {{ form_widget(edit_form.abstract, {'attr': {'class': 'form-control', 'rows':'6'}}) }}
+    </div>
+
+<input type="submit" value="Guardar"  class="btn btn-primary"/>
+<button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+
+{{ form_end(edit_form) }}

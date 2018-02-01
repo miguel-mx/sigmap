@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>User list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Gender</th>
+                <th>Citizenship</th>
+                <th>Affiliation</th>
+                <th>Arrival</th>
+                <th>Departure</th>
+                <th>Createdat</th>
+                <th>Modifiedat</th>
+                <th>Diet</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.citizenship }}</td>
+                <td>{{ user.affiliation }}</td>
+                <td>{% if user.arrival %}{{ user.arrival|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if user.departure %}{{ user.departure|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if user.createdAt %}{{ user.createdAt|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if user.modifiedAt %}{{ user.modifiedAt|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ user.diet }}</td>
+                <td>{{ user.slug }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('user_show', { 'id': user.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_edit', { 'id': user.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('user_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

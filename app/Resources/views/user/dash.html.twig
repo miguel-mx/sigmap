@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% for flash_message in app.session.flashBag.get('notice') %}
+            <div class="alert alert-success" role="alert">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+
+        <section class="jumbotron text-center">
+            <div class="dash-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                <h1 class="display-4 text-muted">SIGMAP 2018</h1>
+                <p class="lead">
+                    <span class="text-muted">Monday June 25th to Friday June 29th, 2018.</span><br><br>
+
+                    The edition 2018 of the workshop Symmetries in Graphs, Maps and Polytopes (SIGMAP) will be held at the Campus in Morelia of the National Autonomous University of Mexico.
+                </p>
+            </div>
+        </section>
+
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    {#<div class="text-center col-4">#}
+                        {#<i class="d-block mx-auto fa fa-5x fa-vcard-o"></i>#}
+                    {#</div>#}
+                    <div class="col-12">
+
+                        <div class="card border-3">
+                            <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b></h5></div>
+                            <div class="card-body text-secondary">
+                                {{ user.citizenship }}<br>
+                                {{ user.affiliation }}<br>
+                                Student: {{ user.student ? 'Yes': 'No' }}<br>
+                                Arrival date: {{ user.arrival ? user.arrival|date('Y-m-d') : 'Not set' }}<br>
+                                Departure date: {{ user.arrival ? user.departure|date('Y-m-d') : 'Not set' }}<br>
+                                <p class="mt-2 py-2 border-top">Dietary restrictions: {{ user.diet ? user.diet : 'Not set' }}</p>
+                                <a href="{{ path('user_edit', { 'slug': user.slug }) }}" class="btn btn-primary mt-3"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if user.student %}
+                <div class="col-md-6">
+                    <div class="row">
+                        {#<div class="text-center col-4">#}
+                            {#<i class="d-block mx-auto fa fa-5x fa-trophy"></i>#}
+                        {#</div>#}
+                        <div class="col-12">
+                            <h5 class="mb-3 text-primary"><b>Finantial support</b></h5>
+
+                            {% if user.support %}
+
+                                {{ user.support.type }}<br>
+                                {{ user.support.studies }}<br>
+
+                                <a href="#" class="btn btn-primary mt-3"><i class="fa fa-check" aria-hidden="true"></i> Edit</a>
+                            {% else %}
+                                <p class="my-1">
+                                    There is a limited fund to support <strong>students</strong>. This can be used to cover the
+                                    registration fee and accommodation. <br><br>We will not give finantial support for
+                                    transportation to and from Morelia.<br><br>
+                                    <strong>The deadline to apply for finantial support is May 18, 2018.</strong><br>
+                                </p>
+                                <a href="#" class="btn btn-primary mt-3"><i class="fa fa-check" aria-hidden="true"></i> Apply</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="row my-5">
+            <div class="col-md-12">
+                <h5 class="mb-3 text-primary"><b>Talk Proposal</b></h5>
+                <p class="my-4">
+                    SIGMAP 2018 intends to serve two main purposes. The first one is to provide a
+                    space where mathematicians working on symmetries of discrete structures can
+                    show their work to the community, and where the community can learn what has
+                    been done recently in the area.<br>
+                </p>
+                <p class="my-4">
+                    The second purpose is to give the community the opportunity to work on ongoing
+                    projects or start new ones. In order to do this it is desirable that the
+                    program contains slots with no talks to encourage academic discussion among
+                    the participants.<br>
+                </p>
+                <p class="my-4">
+                    For these reasons we encourage all participants with no need or desire to give
+                    a talk to attend without speaking. All other participants may give a 20 to 30
+                    minutes talk, depending on the final number of talks requested.<br><br>
+
+                    <strong>The deadline for registering titles and abstracts is June 1, 2018.</strong><br>
+                </p>
+
+                {#{% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}#}
+
+                    {% if user.abstract %}
+
+                        <h3 class="mt-4 py-2 border-bottom">{{ user.title }}</h3>
+                        <p class="my-3">
+                        <h5 class="text-muted">Abstract</h5>
+                        {{ user.abstract|raw }}
+                        </p>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#talkModal">
+                            <i class="fa fa-check" aria-hidden="true"></i> Edit abstract
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#talkModal">
+                            <i class="fa fa-check" aria-hidden="true"></i> Submit an abstract
+                        </button>
+                    {% endif %}
+            </div>
+        </div>
+
+        <!-- Talk Modal -->
+        <div class="modal fade" id="talkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Abstract submission</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% render controller("AppBundle:User:talkEdit", {'slug': user.slug}) %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+{% endblock %}

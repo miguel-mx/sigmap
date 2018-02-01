@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Support list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Studies</th>
+                <th>Reasons</th>
+                <th>Approved</th>
+                <th>Applieddate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for support in supports %}
+            <tr>
+                <td><a href="{{ path('support_show', { 'id': support.id }) }}">{{ support.id }}</a></td>
+                <td>{{ support.type }}</td>
+                <td>{{ support.studies }}</td>
+                <td>{{ support.reasons }}</td>
+                <td>{% if support.approved %}Yes{% else %}No{% endif %}</td>
+                <td>{% if support.appliedDate %}{{ support.appliedDate|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('support_show', { 'id': support.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('support_edit', { 'id': support.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('support_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

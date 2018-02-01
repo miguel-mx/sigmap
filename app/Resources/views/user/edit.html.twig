@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" />
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-8">
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="alert alert-success" role="alert">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+
+            <h3 class="border-bottom pb-3 mb-4 text-muted"><a href="{{ path('user_index') }}">{{ user.name|title }} {{ user.surname|title }}</a></h3>
+
+            {{ form_start(edit_form) }}
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputUsername">Name</label>
+                        <span class="text-danger">{{ form_errors(edit_form.name) }}</span>
+                        {{ form_widget(edit_form.name, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputUsername">Surname</label>
+                        <span class="text-danger">{{ form_errors(edit_form.surname) }}</span>
+                        {{ form_widget(edit_form.surname, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="inputUsername">Citizenship</label>
+                        <span class="text-danger">{{ form_errors(edit_form.citizenship) }}</span>
+                        {{ form_widget(edit_form.citizenship, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="inputGender">Gender</label>
+                        <span class="text-danger">{{ form_errors(edit_form.gender) }}</span>
+                        {{ form_widget(edit_form.gender, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="inputUsername">Affiliation</label>
+                        <span class="text-danger">{{ form_errors(edit_form.affiliation) }}</span>
+                        {{ form_widget(edit_form.affiliation, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="inputStudent">Student</label>
+                        <span class="text-danger">{{ form_errors(edit_form.student) }}</span>
+                        {{ form_widget(edit_form.student, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <h4 class="my-4 border-bottom"><span class="fa fa-plane"></span> Travel information</h4>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputArrival">Arrival date</label>
+                        <div class='input-group date'>
+                            {{ form_widget(edit_form.arrival, {'attr': {'class': 'form-control'}}) }}
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fa fa-calendar"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inputArrival">Departure date</label>
+                        <div class='input-group date'>
+                            {{ form_widget(edit_form.departure, {'attr': {'class': 'form-control'}}) }}
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><span class="fa fa-calendar"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputDiet">Do you have any dietary restrictions?</label>
+                <span class="text-danger">{{ form_errors(edit_form.diet) }}</span>
+                {{ form_widget(edit_form.diet, {'attr': {'class': 'form-control', 'rows':'4'}}) }}
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="Edit" />
+            {{ form_end(edit_form) }}
+
+            {#<ul>#}
+                {#<li>#}
+                    {#<a href="{{ path('user_index') }}">Return</a>#}
+                {#</li>#}
+                {#<li>#}
+                {#{{ form_start(delete_form) }}#}
+                {#<input type="submit" value="Delete">#}
+                {#{{ form_end(delete_form) }}#}
+                {#</li>#}
+            {#</ul>#}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(function () {
+            $('#user_arrival').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#user_departure').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+{% endblock %}
