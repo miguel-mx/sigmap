@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-8">
+
+            <h4 class="text-mute my-4">Recommendation for <small class="text-muted"><strong>{{ user.name }} {{ user.surname }}</strong></small></h4>
+
+            {{ form_start(form) }}
+            <div class="alert-danger">{{ form_errors(form) }}</div>
+
+            <div class="form-group">
+                <p class="text-muted">1) What is your academic relationship with {{ user.name }} {{ user.surname }}?</p>
+                <span class="text-danger">{{ form_errors(form.relationships) }}</span>
+                <div class="row">
+                    <div class="col-4">
+                        {{ form_widget(form.relationships, {'attr': {'class': 'form-control'}}) }}<br>
+                    </div>
+                    <div class="col-8">
+                        {{ form_widget(form.relationship, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="text-muted">2) Briefly describe {{ user.name }} {{ user.surname }} as a student.</p>
+                <span class="text-danger">{{ form_errors(form.description) }}</span>
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                <p class="text-muted">3) What skills of {{ user.name }} {{ user.surname }} would you highlight?</p>
+                <span class="text-danger">{{ form_errors(form.skills) }}</span>
+                {{ form_widget(form.skills, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <p class="lead text-muted">SIGMAP 2018 will be a workshop with 40-50 research talks on the topic of symmetries of combinatorial structures.</p>
+            <div class="form-group">
+                <p class="text-muted">4) Rank from 1 to 5 how helpful do you think that SIGMAP 2018 may be for {{ user.name }} {{ user.surname }}.</p>
+                <span class="text-danger">{{ form_errors(form.rank) }}</span>
+                <div class="row>">
+                    <div class="col-2">
+                    {{ form_widget(form.rank, {'attr': {'class': 'form-control', 'value': '5'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="text-muted">5) Do you have any further comments on {{ user.name }} {{ user.surname }}?.</p>
+                <span class="text-danger">{{ form_errors(form.comments) }}</span>
+                {{ form_widget(form.comments, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <p class="lead text-muted">Thank you!</p>
+
+            {{ form_widget(form) }}
+            <input class="btn btn-large btn-primary mb-5" type="submit" value="Send" />
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/onChangeRelationship.js') }}"></script>
+{%  endblock %}

@@ -48,7 +48,6 @@ class UserController extends Controller
         if($user != $userLogged)
             throw $this->createAccessDeniedException('You cannot access this page!');
 
-
         $deleteForm = $this->createDeleteForm($user);
 
         return $this->render('user/dash.html.twig', array(
@@ -103,6 +102,12 @@ class UserController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
+
+        // TODO: Especificar fecha límite
+        $now = new \DateTime();
+        $deadline = new \DateTime('2018-02-27');
+        if($now >= $deadline)
+            return $this->render(':user:closed.html.twig');
 
         $editForm = $this->createForm('AppBundle\Form\TalkType', $user);
         $editForm->handleRequest($request);

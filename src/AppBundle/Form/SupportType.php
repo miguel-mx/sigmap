@@ -31,6 +31,11 @@ class SupportType extends AbstractType
                 'choices_as_values' => true,
             ))
             ->add('reasons','Symfony\Component\Form\Extension\Core\Type\TextareaType')
+            ->add('prof1')
+            ->add('mailprof1')
+            ->add('prof2')
+            ->add('mailprof2')
+
         ;
     }
     

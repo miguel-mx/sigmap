@@ -48,6 +48,13 @@ class SupportController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        // TODO: Especificar fecha límite
+        $now = new \DateTime();
+        $deadline = new \DateTime('2018-05-18');
+
+        if($now >= $deadline)
+            return $this->render(':support:closed.html.twig');
+
         // If support, redirects to edit
         $user = $this->getUser();
 
@@ -67,7 +74,48 @@ class SupportController extends Controller
             $em->persist($support);
             $em->flush();
 
-            return $this->redirectToRoute('support_show', array('id' => $support->getId()));
+            // Email recomendaciones
+            $mailer = $this->get('mailer');
+
+//            $message = \Swift_Message::newInstance()
+//                ->setSubject('SIGMAP 2018 Support')
+//                ->setFrom('sigmap2018@matmor.unam.mx')
+//                ->setTo(array($support->getMail()))
+//                ->setBcc(array('rudos@matmor.unam.mx'))
+//                ->setBody($this->renderView('support/support-confirmation.txt.twig', array('entity' => $support)))
+//            ;
+//            $mailer->send($message);
+
+            // Envía correo de solicitud de recomendación 1
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Symmetries in Graphs, Maps and Polytopes SIGMAP2018')
+                ->setFrom('sigmap2018@matmor.unam.mx')
+                ->setTo(array($support->getMailprof1()))
+                ->setBcc(array('rudos@matmor.unam.mx'))
+                ->setBody($this->renderView('support/reference-request.txt.twig', array(
+                    'support' => $support, 'email' => $support->getMailprof1(), 'name' => $support->getProf1())
+                ))
+            ;
+            $mailer->send($message);
+
+            // Envía correo de solicitud de recomendación 2
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Symmetries in Graphs, Maps and Polytopes SIGMAP2018')
+                ->setFrom('sigmap2018@matmor.unam.mx')
+                ->setTo(array($support->getMailprof2()))
+                ->setBcc(array('rudos@matmor.unam.mx'))
+                ->setBody($this->renderView('support/reference-request.txt.twig', array(
+                    'support' => $support, 'email' => $support->getMailprof2(), 'name' => $support->getProf2())
+                ))
+            ;
+            $mailer->send($message);
+
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!'
+            );
+
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('support/new.html.twig', array(
@@ -104,6 +152,9 @@ class SupportController extends Controller
      */
     public function editAction(Request $request, Support $support)
     {
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
         $deleteForm = $this->createDeleteForm($support);
         $editForm = $this->createForm('AppBundle\Form\SupportType', $support);
         $editForm->handleRequest($request);

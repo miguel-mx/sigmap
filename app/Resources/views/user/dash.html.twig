@@ -2,10 +2,9 @@
 
 {% block body %}
     <div class="container">
+
         {% for flash_message in app.session.flashBag.get('notice') %}
-            <div class="alert alert-success" role="alert">
-                {{ flash_message }}
-            </div>
+            <div class="alert alert-success"> {{ flash_message }} </div>
         {% endfor %}
 
         <section class="jumbotron text-center">
@@ -28,7 +27,7 @@
                     <div class="col-12">
 
                         <div class="card border-3">
-                            <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b></h5></div>
+                            <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b><small> {{ user.email }}</small></h5></div>
                             <div class="card-body text-secondary">
                                 {{ user.citizenship }}<br>
                                 {{ user.affiliation }}<br>
@@ -53,10 +52,24 @@
 
                             {% if user.support %}
 
-                                {{ user.support.type }}<br>
-                                {{ user.support.studies }}<br>
+                                Type: {{ user.support.type }}<br>
+                                Degree: {{ user.support.studies }}<br>
+                                <p class="my-4">
+                                    {{ user.support.reasons }}
+                                </p>
 
-                                <a href="#" class="btn btn-primary mt-3"><i class="fa fa-check" aria-hidden="true"></i> Edit</a>
+                                {% if user.support.recommendations|length > 0 %}
+                                    <p>Recommendation received from:</p>
+                                    <ul>
+                                    {% for rec in user.support.recommendations %}
+                                        <li>{{ rec.email }} <i class="fa fa-check text-success"></i></li>
+                                    {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p class="p-2 bg-warning text-secondary">No recommendations received.</p>
+                                {% endif %}
+                                <p>Support status: <span class="text-warning">pending...</span></p>
+
                             {% else %}
                                 <p class="my-1">
                                     There is a limited fund to support <strong>students</strong>. This can be used to cover the
@@ -64,7 +77,7 @@
                                     transportation to and from Morelia.<br><br>
                                     <strong>The deadline to apply for finantial support is May 18, 2018.</strong><br>
                                 </p>
-                                <a href="#" class="btn btn-primary mt-3"><i class="fa fa-check" aria-hidden="true"></i> Apply</a>
+                                <a href="{{ path('support_new') }}" class="btn btn-primary mt-3"><i class="fa fa-check" aria-hidden="true"></i> Apply</a>
                             {% endif %}
                         </div>
                     </div>
@@ -95,8 +108,10 @@
                     <strong>The deadline for registering titles and abstracts is June 1, 2018.</strong><br>
                 </p>
 
-                {#{% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}#}
-
+                {% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}
+                    <button type="button" class="btn btn-primary" disabled>
+                        <i class="fa fa-check" ></i> Abstract</button>
+                {% else %}
                     {% if user.abstract %}
 
                         <h3 class="mt-4 py-2 border-bottom">{{ user.title }}</h3>
@@ -113,6 +128,7 @@
                             <i class="fa fa-check" aria-hidden="true"></i> Submit an abstract
                         </button>
                     {% endif %}
+                {% endif %}
             </div>
         </div>
 

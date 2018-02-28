@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block body %}
+
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="alert alert-success"> {{ flash_message }} </div>
+    {% endfor %}
+
+    <h4 class="text-mute">Recommendation for <small class="text-muted"><strong>{{ user.name }} {{ user.surname }}</strong></small></h4>
+    <p class="text-muted">Professor's email: {{ recommendation.email }}</p>
+
+    <div class="card my-3 text-muted">
+        <div class="card-body">
+            <p class="card-text"><strong>Relationship</strong>: {{ recommendation.relationship }}</p>
+        </div>
+    </div>
+    <div class="card my-3 text-muted">
+        <div class="card-header">
+            <strong>Description</strong>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ recommendation.description }}</p>
+        </div>
+    </div>
+    <div class="card my-3 text-muted">
+        <div class="card-header">
+            <strong>Student's skills</strong>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ recommendation.skills }}</p>
+        </div>
+    </div>
+    <div class="card my-3 text-muted">
+        <div class="card-body">
+            <p class="card-text"><strong>Rank</strong>: {{ recommendation.rank }}</p>
+        </div>
+    </div>
+
+    {% if recommendation.comments %}
+        <div class="card my-3 text-muted">
+            <div class="card-header">
+                <strong>Comments</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ recommendation.comments }}</p>
+            </div>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

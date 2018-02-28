@@ -15,7 +15,8 @@
                 </div>
             {% endfor %}
 
-            <h3 class="border-bottom pb-3 mb-4 text-muted"><a href="{{ path('user_index') }}">{{ user.name|title }} {{ user.surname|title }}</a></h3>
+            <h3 class="border-bottom pb-3 mb-4 text-muted"><a href="{{ path('user_index') }}">{{ user.name|title }} {{ user.surname|title }}</a>
+            <small> {{ user.email }}</small></h3>
 
             {{ form_start(edit_form) }}
             <div class="form-row">

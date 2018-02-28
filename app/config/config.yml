@@ -70,6 +70,10 @@ swiftmailer:
     encryption: "%mailer_encryption%"
     port: "%mailer_port%"
     spool: { type: memory }
+    stream_options:
+        ssl:
+            verify_peer: false
+            verify_peer_name: false
 
 # app/config/config.yml
 fos_user:
