@@ -91,7 +91,7 @@ class SupportController extends Controller
                 ->setSubject('Symmetries in Graphs, Maps and Polytopes SIGMAP2018')
                 ->setFrom('sigmap2018@matmor.unam.mx')
                 ->setTo(array($support->getMailprof1()))
-                ->setBcc(array('rudos@matmor.unam.mx'))
+                ->setBcc(array('miguel@matmor.unam.mx'))
                 ->setBody($this->renderView('support/reference-request.txt.twig', array(
                     'support' => $support, 'email' => $support->getMailprof1(), 'name' => $support->getProf1())
                 ))
@@ -103,7 +103,7 @@ class SupportController extends Controller
                 ->setSubject('Symmetries in Graphs, Maps and Polytopes SIGMAP2018')
                 ->setFrom('sigmap2018@matmor.unam.mx')
                 ->setTo(array($support->getMailprof2()))
-                ->setBcc(array('rudos@matmor.unam.mx'))
+                ->setBcc(array('miguel@matmor.unam.mx'))
                 ->setBody($this->renderView('support/reference-request.txt.twig', array(
                     'support' => $support, 'email' => $support->getMailprof2(), 'name' => $support->getProf2())
                 ))
