@@ -105,7 +105,7 @@ class UserController extends Controller
 
         // TODO: Especificar fecha límite
         $now = new \DateTime();
-        $deadline = new \DateTime('2018-02-27');
+        $deadline = new \DateTime('2018-06-01');
         if($now >= $deadline)
             return $this->render(':user:closed.html.twig');
 

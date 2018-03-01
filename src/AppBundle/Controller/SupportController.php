@@ -86,9 +86,11 @@ class SupportController extends Controller
 //            ;
 //            $mailer->send($message);
 
+            $subject = 'Request for recommendation letter for ' .{{ user.name}}. ' ' .{{ user.surname }};
+
             // Envía correo de solicitud de recomendación 1
             $message = \Swift_Message::newInstance()
-                ->setSubject('Symmetries in Graphs, Maps and Polytopes SIGMAP2018')
+                ->setSubject($subject)
                 ->setFrom('sigmap2018@matmor.unam.mx')
                 ->setTo(array($support->getMailprof1()))
                 ->setBcc(array('miguel@matmor.unam.mx'))
@@ -100,7 +102,7 @@ class SupportController extends Controller
 
             // Envía correo de solicitud de recomendación 2
             $message = \Swift_Message::newInstance()
-                ->setSubject('Symmetries in Graphs, Maps and Polytopes SIGMAP2018')
+                ->setSubject($subject)
                 ->setFrom('sigmap2018@matmor.unam.mx')
                 ->setTo(array($support->getMailprof2()))
                 ->setBcc(array('miguel@matmor.unam.mx'))
