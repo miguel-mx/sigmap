@@ -86,7 +86,7 @@ class SupportController extends Controller
 //            ;
 //            $mailer->send($message);
 
-            $subject = 'Request for recommendation letter for ' .{{ user.name}}. ' ' .{{ user.surname }};
+            $subject = 'Request for recommendation letter for ' . $user->getName(). ' ' .$user->getSurname();
 
             // Envía correo de solicitud de recomendación 1
             $message = \Swift_Message::newInstance()
