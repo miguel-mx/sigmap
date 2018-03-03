@@ -59,8 +59,14 @@ class RecommendationController extends Controller
            throw $this->createNotFoundException('Access denied (email)');
 
         $recommended = $user->getSupport()->isRecomended($email);
-        if($recommended)
+        if($recommended) {
+            $this->addFlash(
+                'notice',
+                'Thank you for your help! The organizing committee... '
+            );
+
             return $this->redirectToRoute('recommendation_show', array('slug' => $slug, 'id' => $recommended->getId()));
+        }
 
         $recommendation = new Recommendation();
         $recommendation->setSupport($user->getSupport());
@@ -77,7 +83,7 @@ class RecommendationController extends Controller
 
             $this->addFlash(
                 'notice',
-                'Your changes were saved!'
+                'Thank you for your help! The organizing committee... '
             );
 
             return $this->redirectToRoute('recommendation_show', array('slug' => $slug, 'id' => $recommendation->getId()));
