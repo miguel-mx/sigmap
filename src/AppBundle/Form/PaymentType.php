@@ -4,14 +4,13 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Country;
 use AppBundle\Repository\CountryRepository;
-use AppBundle\Repository\PaymentRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class PaymentType extends AbstractType
 {

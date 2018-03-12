@@ -40,14 +40,15 @@ class PaymentController extends Controller
     public function newAction(Request $request)
     {
         $payment = new Payment();
+
         $form = $this->createForm('AppBundle\Form\PaymentType', $payment);
         $form->handleRequest($request);
 
         // If support, redirects to edit
         $user = $this->getUser();
 
-        $logger = $this->get('logger');
-        $logger->info('TestPayment' . $payment->getPais());
+//        $logger = $this->get('logger');
+//        $logger->info('TestPayment' . $payment->getPais());
 
         if ($form->isSubmitted() && $form->isValid()) {
 

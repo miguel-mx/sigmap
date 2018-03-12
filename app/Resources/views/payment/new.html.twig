@@ -131,14 +131,10 @@
 
     <script>
         var $pais = $('#appbundle_payment_pais');
-        // When sport gets selected ...
         $pais.change(function() {
-            // ... retrieve the corresponding form.
             var $form = $(this).closest('form');
-            // Simulate form data, but only include the selected sport value.
             var data = {};
             data[$pais.attr('name')] = $pais.val();
-            //alert(data[]);
 
             //Submit data via AJAX to the form's action path.
             $.ajax({
@@ -147,12 +143,10 @@
                 data : data,
                 success: function(html) {
                     // Replace current states ...
-                    alert($html.find('#appbundle_payment_estado'));
                     $('#appbundle_payment_estado').replaceWith(
                         // ... with the returned one from the AJAX response.
-                        $html.find('#appbundle_payment_estado')
+                        $(html).find('#appbundle_payment_estado')
                     );
-                    // Position field now displays the appropriate positions.
                 }
             });
         });
