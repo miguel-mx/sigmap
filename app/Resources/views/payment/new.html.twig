@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" />
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-8">
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="alert alert-success" role="alert">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+
+            <h3 class="border-bottom pb-3 mb-4 text-muted"><a href="{{ path('user_index') }}">{{ user.name|title }} {{ user.surname|title }}</a>
+            <small><i class="fa fa-dollar"></i> Payment</small></h3>
+
+            {{ form_start(form, {'action': path('payment_new'), 'method': 'POST'}) }}
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputBirthDate">Birth Date</label>
+                    <span class="text-danger">{{ form_errors(form.birthdate) }}</span>
+                    <div class='input-group date'>
+                        {{ form_widget(form.birthdate, {'attr': {'class': 'form-control'}}) }}
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><span class="fa fa-calendar"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputRFC">RFC</label>
+                <span class="text-danger">{{ form_errors(form.rfc) }}</span>
+                <div class='input-group'>
+                    {{ form_widget(form.rfc, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmpresa">Empresa</label>
+                <span class="text-danger">{{ form_errors(form.empresa) }}</span>
+                <div class='input-group'>
+                    {{ form_widget(form.empresa, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputCalle">Calle</label>
+                <span class="text-danger">{{ form_errors(form.calle) }}</span>
+                <div class='input-group'>
+                    {{ form_widget(form.calle, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputNumExt">Número Exterior</label>
+                    <div class='input-group'>
+                        {{ form_widget(form.numexterior, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputNumInt">Número Interior</label>
+                    <div class='input-group'>
+                        {{ form_widget(form.numinterior, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    <label for="inputColonia">Colonia</label>
+                    <div class='input-group'>
+                        {{ form_widget(form.colonia, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputCpostal">Código Postal</label>
+                    <span class="text-danger">{{ form_errors(form.cpostal) }}</span>
+                    <div class='input-group'>
+                        {{ form_widget(form.cpostal, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPais">País</label>
+                    <div class='input-group'>
+                        {{ form_widget(form.pais, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEstado">Estado</label>
+                    <div class='input-group'>
+                        {{ form_widget(form.estado, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputDelegacion">Delegación</label>
+                <div class='input-group'>
+                    {{ form_widget(form.delegacion, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputTelefono">Teléfono</label>
+                <span class="text-danger">{{ form_errors(form.telefono) }}</span>
+                <div class='input-group'>
+                    {{ form_widget(form.telefono, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            {{ form_widget(form) }}
+            <input class="btn btn-primary my-5" type="submit" value="Continue" />
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(function () {
+            $('#appbundle_payment_birthdate').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+
+    <script>
+        var $pais = $('#appbundle_payment_pais');
+        // When sport gets selected ...
+        $pais.change(function() {
+            // ... retrieve the corresponding form.
+            var $form = $(this).closest('form');
+            // Simulate form data, but only include the selected sport value.
+            var data = {};
+            data[$pais.attr('name')] = $pais.val();
+            //alert(data[]);
+
+            //Submit data via AJAX to the form's action path.
+            $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                    // Replace current states ...
+                    alert($html.find('#appbundle_payment_estado'));
+                    $('#appbundle_payment_estado').replaceWith(
+                        // ... with the returned one from the AJAX response.
+                        $html.find('#appbundle_payment_estado')
+                    );
+                    // Position field now displays the appropriate positions.
+                }
+            });
+        });
+    </script>
+{% endblock %}

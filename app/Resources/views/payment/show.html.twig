@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Payment</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ payment.id }}</td>
+            </tr>
+            <tr>
+                <th>Birthdate</th>
+                <td>{% if payment.birthdate %}{{ payment.birthdate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Rfc</th>
+                <td>{{ payment.rfc }}</td>
+            </tr>
+            <tr>
+                <th>Empresa</th>
+                <td>{{ payment.empresa }}</td>
+            </tr>
+            <tr>
+                <th>Calle</th>
+                <td>{{ payment.calle }}</td>
+            </tr>
+            <tr>
+                <th>Numexterior</th>
+                <td>{{ payment.numexterior }}</td>
+            </tr>
+            <tr>
+                <th>Numinterior</th>
+                <td>{{ payment.numinterior }}</td>
+            </tr>
+            <tr>
+                <th>Colonia</th>
+                <td>{{ payment.colonia }}</td>
+            </tr>
+            <tr>
+                <th>Cpostal</th>
+                <td>{{ payment.cpostal }}</td>
+            </tr>
+            <tr>
+                <th>Pais</th>
+                <td>{{ payment.pais }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ payment.estado }}</td>
+            </tr>
+            <tr>
+                <th>Delegacion</th>
+                <td>{{ payment.delegacion }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ payment.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Idproducto</th>
+                <td>{{ payment.idproducto }}</td>
+            </tr>
+            <tr>
+                <th>Isocode</th>
+                <td>{{ payment.isocode }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if payment.createdAt %}{{ payment.createdAt|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Response</th>
+                <td>{{ payment.response }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('payment_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('payment_edit', { 'id': payment.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

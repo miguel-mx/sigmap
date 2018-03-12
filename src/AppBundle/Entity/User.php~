@@ -137,6 +137,12 @@ class User extends BaseUser
      */
     private $support;
 
+    /**
+     * One User has One Payment.
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Payment", mappedBy="user")
+     */
+    private $payment;
+
 
     public function __construct()
     {
@@ -496,5 +502,28 @@ class User extends BaseUser
     public function getAccepted()
     {
         return $this->accepted;
+    }
+
+    /**
+     * Set support
+     *
+     * @param \AppBundle\Entity\Support $support
+     * @return User
+     */
+    public function setSupport(\AppBundle\Entity\Support $support = null)
+    {
+        $this->support = $support;
+
+        return $this;
+    }
+
+    /**
+     * Get support
+     *
+     * @return \AppBundle\Entity\Support 
+     */
+    public function getSupport()
+    {
+        return $this->support;
     }
 }

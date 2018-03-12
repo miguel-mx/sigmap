@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Payments list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Birthdate</th>
+                <th>Rfc</th>
+                <th>Empresa</th>
+                <th>Calle</th>
+                <th>Numexterior</th>
+                <th>Numinterior</th>
+                <th>Colonia</th>
+                <th>Cpostal</th>
+                <th>Pais</th>
+                <th>Estado</th>
+                <th>Delegacion</th>
+                <th>Telefono</th>
+                <th>Idproducto</th>
+                <th>Isocode</th>
+                <th>Createdat</th>
+                <th>Response</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for payment in payments %}
+            <tr>
+                <td><a href="{{ path('payment_show', { 'id': payment.id }) }}">{{ payment.id }}</a></td>
+                <td>{% if payment.birthdate %}{{ payment.birthdate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ payment.rfc }}</td>
+                <td>{{ payment.empresa }}</td>
+                <td>{{ payment.calle }}</td>
+                <td>{{ payment.numexterior }}</td>
+                <td>{{ payment.numinterior }}</td>
+                <td>{{ payment.colonia }}</td>
+                <td>{{ payment.cpostal }}</td>
+                <td>{{ payment.pais }}</td>
+                <td>{{ payment.estado }}</td>
+                <td>{{ payment.delegacion }}</td>
+                <td>{{ payment.telefono }}</td>
+                <td>{{ payment.idproducto }}</td>
+                <td>{{ payment.isocode }}</td>
+                <td>{% if payment.createdAt %}{{ payment.createdAt|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ payment.response }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('payment_show', { 'id': payment.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('payment_edit', { 'id': payment.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('payment_new') }}">Create a new payment</a>
+        </li>
+    </ul>
+{% endblock %}

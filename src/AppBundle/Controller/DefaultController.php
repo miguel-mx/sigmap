@@ -17,10 +17,6 @@ class DefaultController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('admin_index');
-        }
-
         return $this->redirectToRoute('user_index');
     }
 }

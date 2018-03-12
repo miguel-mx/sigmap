@@ -64,12 +64,14 @@ class SupportController extends Controller
         }
 
         $support = new Support();
-        $support->setUser($user);
 
         $form = $this->createForm('AppBundle\Form\SupportType', $support);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $support->setUser($user);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($support);
             $em->flush();

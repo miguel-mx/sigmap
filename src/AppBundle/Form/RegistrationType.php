@@ -15,8 +15,8 @@ class RegistrationType extends AbstractType
         $builder->add('surname');
         $builder->add('gender','Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
             'choices'  => array(
-                'Female' => 'Female',
-                'Male' => 'Male',
+                'Female' => 'M',
+                'Male' => 'H',
             ),
             'choices_as_values' => true,
         ));

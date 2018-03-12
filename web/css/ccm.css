@@ -3,3 +3,7 @@
     margin-bottom: 0;
     padding-top: calc(var(--jumbotron-padding-y) * 2);
 }
+
+.admin {
+    font-size: medium;
+}

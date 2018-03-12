@@ -17,8 +17,6 @@
 
   </head>
   <body>
-
-
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div class="container">
           <a class="navbar-brand" href="#">SIGMAP2018</a>
@@ -28,6 +26,11 @@
           {% block navbar %}
           <div class="collapse navbar-collapse" id="navbarCollapse">
               <ul class="navbar-nav ml-auto">
+                  {% if is_granted('ROLE_ADMIN') %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ path('admin_index') }}">Admin</a>
+                      </li>
+                  {% endif %}
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-o" aria-hidden="true"></i> {{ app.user }}</a>
                       <div class="dropdown-menu">

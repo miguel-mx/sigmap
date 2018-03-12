@@ -1,21 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h3>Registry data base</h3>
+{% block stylesheets %}
+    {{ parent() }}
+    {#<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/datatables.min.css"/>#}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+{% endblock %}
 
-    <table>
+{% block body %}
+    </div>
+    <div class="container-fluid admin">
+    <h4 class="my-5">Registry data base</h4>
+
+    <table id="registry" class="table table-sm table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th>Name</th>
+                <th>Citizenship</th>
+                <th>value</th>
+                <th>is Student</th>
+                <th>Support</th>
+                <th>Talk</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
-            {% if 'ROLE_ADMIN' not in user.roles %}
-                <tr>
-                    <td><a href="{{ path('admin_show', { 'slug': user.slug }) }}">{{ user.name  }} {{ user.surname }}</a></td>
-                </tr>
-            {% endif %}
+            <tr>
+                <td><a href="{{ path('admin_show', { 'slug': user.slug }) }}">{{ user.name  }} {{ user.surname }}</a></td>
+                <td>{{ user.citizenship }}</td>
+                <td>{{ user.student }}</td>
+                <td class="text-center">{{ user.student == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'}}</td>
+                <td class="text-center">{{ user.support ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'}}</td>
+                <td>{{ user.title ? user.title: 'No'}}</td>
+
+            </tr>
+
         {% endfor %}
         </tbody>
     </table>
@@ -25,4 +44,17 @@
             {#<a href="{{ path('support_new') }}">Create a new entry</a>#}
         {#</li>#}
     {#</ul>#}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/datatables.min.js"></script>#}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#registry').DataTable();
+        } );
+    </script>
 {% endblock %}

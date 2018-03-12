@@ -13,6 +13,8 @@
         {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
             </a>
     {% else %}
+
+        <div class="text-center"><img src="{{ asset('img/sigmap.png') }}"> </div>
         {% if error %}
             <div class="text-center text-danger">
                 {{ error|trans({}, 'FOSUserBundle') }}
@@ -22,7 +24,7 @@
         <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-            <h4 class="text-muted">SIGMAP 2018 <small>- Sign in</small></h4>
+            <h4 class="text-muted"><small>Sign in</small></h4>
             <div class="form-group">
                 <label class="sr-only" for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
                 <input type="text" class="form-control" placeholder="username" id="username" name="_username" value="{{ last_username }}" required="required" />
