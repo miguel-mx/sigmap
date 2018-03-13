@@ -6,6 +6,7 @@ use AppBundle\Entity\Payment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Payment controller.
@@ -39,7 +40,14 @@ class PaymentController extends Controller
      */
     public function newAction(Request $request)
     {
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $payment = new Payment();
+
+        // Validar que no haya hecho ya un pago éste usuario.
 
         $form = $this->createForm('AppBundle\Form\PaymentType', $payment);
         $form->handleRequest($request);
@@ -47,30 +55,27 @@ class PaymentController extends Controller
         // If support, redirects to edit
         $user = $this->getUser();
 
-//        $logger = $this->get('logger');
-//        $logger->info('TestPayment' . $payment->getPais());
-
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // usuario
             $payment->setUser($user);
-            // producto
             $payment->setIdproducto('simap0001');
-            // isocode
             $payment->setIsocode('en');
             $payment->setResponse('200');
 
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($payment);
+//            $em->flush();
+//
+//            $this->addFlash(
+//                'notice',
+//                'Your payment information was sent! ' . $response
+//            );
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($payment);
-            $em->flush();
-
-            $this->addFlash(
-                'notice',
-                'Your payment information was sent!'
-            );
-
-            return $this->redirectToRoute('user_index');
+            $data_json = $payment->sendToPrometeo();
+            $response = new Response($data_json);
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+            //return $this->redirectToRoute('user_index');
 
             // return $this->redirectToRoute('payment_show', array('id' => $payment->getId()));
         }
@@ -158,4 +163,5 @@ class PaymentController extends Controller
             ->getForm()
         ;
     }
+
 }
