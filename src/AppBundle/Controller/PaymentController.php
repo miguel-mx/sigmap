@@ -5,15 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Payment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Utils\Crypt\Crypt\Crypt_GPG;
+use AppBundle\Utils\Crypt\Crypt\Crypt_GPGAbstract;
 
-use singpolyma\lib\opengp_crypt_rsa as opengp_crypt_rsa.php;
-use phpseclib\Math\BigInteger as Math_BigInteger;
 
-require_once dirname(__FILE__).'/../lib/openpgp.php';
-require_once dirname(__FILE__).'/../lib/openpgp_crypt_rsa.php';
-require_once dirname(__FILE__).'/../lib/openpgp_crypt_symmetric.php';
 
 /**
  * Payment controller.
@@ -202,7 +200,7 @@ class PaymentController extends Controller
                 'nombre' => $payment->getUser()->getName(),
                 'apaterno' => $payment->getUser()->getSurname(),
                 'amaterno' => '',
-                'birthdate' => $payment->getBirthdate()->format('Y-m-d'),
+                'birthdate' => $payment->getBirthdate(),
                 'sexo'   => $payment->getUser()->getGender()
             ),
             'direccion' => array(
@@ -262,15 +260,27 @@ WQc=
 =REGy
 -----END PGP PUBLIC KEY BLOCK-----";
 
-//        require_once dirname(__FILE__).'/../lib/openpgp.php';
-//        require_once dirname(__FILE__).'/../lib/openpgp_crypt_rsa.php';
-//        require_once dirname(__FILE__).'/../lib/openpgp_crypt_symmetric.php';
-//        $key = OpenPGP_Message::parse(file_get_contents(dirname(__FILE__) . '/../tests/data/helloKey.gpg'));
-//        $data = new OpenPGP_LiteralDataPacket('This is text.', array('format' => 'u', 'filename' => 'stuff.txt'));
-//        $encrypted = OpenPGP_Crypt_Symmetric::encrypt($key, new OpenPGP_Message(array($data)));
+        $fprintkey = 'DD6F58783C72B6E81706B990B50D5A2F58965044';
+
+        $opciones = array(
+            'privateKeyring' => '/var/www/.gnupg/secring.gpg',
+            'publicKeyring'  => '/var/www/.gnupg/pubring.gpg',
+            'trustDb'        => '/var/www/.gnupg/trustdb.gpg',
+            'homedir'        => '/var/www/.gnupg',
+            'debug'          => false
+        );
 
 
-        $criptograma = OpenPGP_Crypt_Symmetric::encrypt($pubkey, new OpenPGP_Message(array($json_data)));
+        $gpg = new Crypt_GPG($opciones);
+        $gpg->addencryptKey($fprintkey);
+
+//        try{
+            $criptograma = $gpg->encrypt($json_data);
+//        }catch(Exception $exception){
+//            echo 'Error al cifrar el mensaje'.$exception;
+//            exit(1);
+//        }
+
 
         // Envío de información
         $ch = curl_init($this->generateUrl('payment_data'));
