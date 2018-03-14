@@ -4,8 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Utils\Crypt_GPG as GPG;
-
+use Defuse\Crypto\Crypto;
 
 /**
  * Payment
@@ -583,94 +582,6 @@ class Payment
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTime();
-    }
-
-    /*
-     * Send information to Prometeo
-     * @return string
-     *
-     */
-    public function sendToPrometeo()
-    {
-        $datos = array(
-            'cuenta' => array(
-                'correo' => $this->getUser()->getEmail(),
-                /*'pass'  => 'Ad+fg1',*/
-                'nombre' => $this->getUser()->getName(),
-                'apaterno' => $this->getUser()->getSurname(),
-                'amaterno' => '',
-                'birthdate' => $this->getBirthdate()->format('Y-m-d'),
-                'sexo'   => $this->getUser()->getGender()
-            ),
-            'direccion' => array(
-                'rfc' => $this->getRfc(),
-                'empresa' => $this->getEmpresa(),
-                'calle' => $this->getCalle(),
-                'numexterior' => $this->getNumexterior(),
-                'colonia' => $this->getColonia(),
-                'cpostal' => $this->getCpostal(),
-                'pais'  => $this->getPais()->getId(),
-                'estado' => $this->getEstado()->getId(),
-                'delegacion' => $this->getDelegacion(),
-                'telefono' => $this->getTelefono(),
-            ),
-            'producto' => array(
-                'idproducto' => $this->getIdproducto(),
-            ),
-            'idioma' => array(
-                'isocode' => $this->getIsocode(),
-            ),
-
-        );
-        $json_data =  json_encode($datos);
-
-        // Cifrado de datos
-        $fprintkey = 'DD6F58783C72B6E81706B990B50D5A2F58965044';
-
-        $opciones = array(
-//            'privateKeyring' => '/var/www/.gnupg/secring.gpg',
-            'privateKeyring' => '/var/www/.gnupg/secring.gpg',
-            'publicKeyring'  => '/var/www/.gnupg/pubring.gpg',
-            'trustDb'        => '/var/www/.gnupg/trustdb.gpg',
-            'homedir'        => '/var/www/.gnupg',
-            'debug'          => false
-        );
-
-        $gpg = new GPG($opciones);
-        $gpg->addencryptKey($fprintkey);
-
-
-        if (!$criptograma = $gpg->encrypt($json_data)) {
-            throw $this->createAccessDeniedException();
-        }
-
-        // Envío de información
-        $ch = curl_init('https://tiendad.fciencias.unam.mx/serviciosweb/WSAddClient.php');
-
-        curl_setopt_array($ch, array(
-            CURLOPT_POST => TRUE,
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($criptograma)
-            ),
-            CURLOPT_POSTFIELDS => $criptograma,
-            CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-            CURLOPT_SSL_VERIFYPEER => false
-        ));
-
-        $response = curl_exec($ch);
-        // Check for errors
-        if($response === FALSE){
-            die(curl_error($ch));
-        }
-        else{
-//            var_dump(json_decode($response,true));
-            return $response;
-        }
-
-
-
     }
 
 }
