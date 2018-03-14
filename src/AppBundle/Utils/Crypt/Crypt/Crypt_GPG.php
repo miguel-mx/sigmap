@@ -59,12 +59,12 @@ namespace AppBundle\Utils\Crypt\Crypt;
 /**
  * Base class for GPG methods
  */
-require_once 'Crypt/Crypt_GPGAbstract.php';
+require_once 'Crypt_GPGAbstract.php';
 
 /**
  * GPG exception classes.
  */
-require_once 'Crypt/GPG/Exceptions.php';
+require_once 'GPG/PEAR_Exception.php';
 
 // {{{ class Crypt_GPG
 

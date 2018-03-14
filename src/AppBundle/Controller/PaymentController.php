@@ -45,7 +45,7 @@ class PaymentController extends Controller
      */
     public function testAction()
     {
-        $data = $request->request->all();
+        $data = ''; //$this->getParameter('');
 
         return $this->render('payment/test.html.twig', array(
             'data' => $data,
@@ -270,17 +270,10 @@ WQc=
             'debug'          => false
         );
 
-
         $gpg = new Crypt_GPG($opciones);
         $gpg->addencryptKey($fprintkey);
 
-//        try{
-            $criptograma = $gpg->encrypt($json_data);
-//        }catch(Exception $exception){
-//            echo 'Error al cifrar el mensaje'.$exception;
-//            exit(1);
-//        }
-
+        $criptograma = $gpg->encrypt($json_data);
 
         // Envío de información
         $ch = curl_init($this->generateUrl('payment_data'));
