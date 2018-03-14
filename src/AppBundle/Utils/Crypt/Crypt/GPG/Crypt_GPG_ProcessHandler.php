@@ -40,12 +40,17 @@ namespace AppBundle\Utils\Crypt\Crypt\GPG;
 /**
  * GPG exception classes.
  */
-require_once 'Crypt/GPG/Exceptions.php';
+require_once 'Crypt_GPG.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG;
+
+require_once 'Crypt_GPG_Exception.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_Exception;
 
 /**
  * Signature object class definition
  */
-require_once 'Crypt/GPG/Signature.php';
+require_once 'Crypt_GPG_Signature.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_Signature;
 
 // {{{ class Crypt_GPG_ProcessHandler
 

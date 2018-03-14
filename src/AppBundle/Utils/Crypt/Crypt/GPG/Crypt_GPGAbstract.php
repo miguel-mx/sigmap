@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Utils\Crypt;
+namespace AppBundle\Utils\Crypt\Crypt\GPG;
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -47,22 +47,26 @@ namespace AppBundle\Utils\Crypt;
 /**
  * GPG key class
  */
-require_once 'Crypt/GPG/Key.php';
+//require_once 'GPG/Crypt_GPG_Key.php';
+use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_Key;
 
 /**
  * GPG sub-key class
  */
-require_once 'Crypt/GPG/SubKey.php';
+//require_once 'Crypt/GPG/SubKey.php';
+use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_SubKey;
 
 /**
  * GPG user id class
  */
-require_once 'Crypt/GPG/UserId.php';
+//require_once 'Crypt/GPG/UserId.php';
+use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_UserId;
 
 /**
  * GPG process and I/O engine class
  */
-require_once 'Crypt/GPG/Engine.php';
+//require_once 'Crypt/GPG/Engine.php';
+use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_Engine;
 
 // {{{ class Crypt_GPGAbstract
 

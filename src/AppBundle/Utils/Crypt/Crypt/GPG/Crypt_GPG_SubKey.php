@@ -692,14 +692,14 @@ class Crypt_GPG_SubKey
             $timestamp = 0;
         } else {
             // all times are in UTC according to GPG documentation
-            $timeZone = new DateTimeZone('UTC');
+            $timeZone = new \DateTimeZone('UTC');
 
             if (strpos($string, 'T') === false) {
                 // interpret as UNIX timestamp
                 $string = '@' . $string;
             }
 
-            $date = new DateTime($string, $timeZone);
+            $date = new \DateTime($string, $timeZone);
 
             // convert to UNIX timestamp
             $timestamp = intval($date->format('U'));

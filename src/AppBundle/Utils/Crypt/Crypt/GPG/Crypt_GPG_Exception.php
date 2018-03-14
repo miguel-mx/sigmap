@@ -41,7 +41,8 @@ namespace AppBundle\Utils\Crypt\Crypt\GPG;
 /**
  * PEAR Exception handler and base class
  */
-require_once 'PEAR/Exception.php';
+require_once 'PEAR_Exception.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\PEAR_Exception;
 
 // {{{ class Crypt_GPG_Exception
 

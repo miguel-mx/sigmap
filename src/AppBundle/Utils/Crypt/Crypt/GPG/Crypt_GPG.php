@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Utils\Crypt\Crypt;
+namespace AppBundle\Utils\Crypt\Crypt\GPG;
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
@@ -60,11 +60,14 @@ namespace AppBundle\Utils\Crypt\Crypt;
  * Base class for GPG methods
  */
 require_once 'Crypt_GPGAbstract.php';
+// use AppBundle\Utils\Crypt\Crypt\Crypt_GPGAbstract;
 
 /**
  * GPG exception classes.
  */
-require_once 'GPG/PEAR_Exception.php';
+require_once 'Crypt_GPG_Exception.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\Exceptions;
+
 
 // {{{ class Crypt_GPG
 
@@ -1444,20 +1447,20 @@ class Crypt_GPG extends Crypt_GPGAbstract
         }
 
         if (count($subKeys) === 0) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Key "' . $key . '" is not in a recognized format.'
             );
         }
 
         foreach ($subKeys as $subKey) {
             if ($encrypt && !$subKey->canEncrypt()) {
-                throw new InvalidArgumentException(
+                throw new \InvalidArgumentException(
                     'Key "' . $key . '" cannot encrypt.'
                 );
             }
 
             if ($sign && !$subKey->canSign()) {
-                throw new InvalidArgumentException(
+                throw new \InvalidArgumentException(
                     'Key "' . $key . '" cannot sign.'
                 );
             }

@@ -1,6 +1,5 @@
 <?php
 namespace AppBundle\Utils\Crypt\Crypt\GPG;
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -35,12 +34,12 @@ namespace AppBundle\Utils\Crypt\Crypt\GPG;
 /**
  * Sub-key class definition
  */
-require_once 'Crypt/GPG/SubKey.php';
+require_once 'Crypt_GPG_SubKey.php';
 
 /**
  * User id class definition
  */
-require_once 'Crypt/GPG/UserId.php';
+require_once 'Crypt_GPG_UserId.php';
 
 // {{{ class Crypt_GPG_Key
 

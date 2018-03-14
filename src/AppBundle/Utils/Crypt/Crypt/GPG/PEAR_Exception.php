@@ -1,6 +1,7 @@
 <?php
 /* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 namespace AppBundle\Utils\Crypt\Crypt\GPG;
+
 /**
  * PEAR_Exception
  *

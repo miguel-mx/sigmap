@@ -41,32 +41,36 @@ namespace AppBundle\Utils\Crypt\Crypt\GPG;
 /**
  * Crypt_GPG base class.
  */
-require_once 'Crypt/GPG.php';
+//require_once __DIR__.'AppBundle\Utils\Crypt\Crypt\Crypt_GPG.php';
+//use AppBundle\Utils\Crypt\Crypt\Crypt_GPG;
 
 /**
  * GPG exception classes.
  */
-require_once 'Crypt/GPG/Exceptions.php';
+//require_once 'Crypt/GPG/Exceptions.php';
+//use Crypt_GPG_Exception;
 
 /**
  * Status/Error handler class.
  */
-require_once 'Crypt/GPG/ProcessHandler.php';
+require_once 'Crypt_GPG_ProcessHandler.php';
 
 /**
  * Process control methods.
  */
-require_once 'Crypt/GPG/ProcessControl.php';
-
+//require_once 'AppBundle::Utils\Crypt\Crypt\GPG\Crypt_GPG_ProcessControl.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_ProcessControl;
 /**
  * Information about a created signature
  */
-require_once 'Crypt/GPG/SignatureCreationInfo.php';
+//require_once 'GPG/SignatureCreationInfo.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\Crypt_GPG_SignatureCreationInfo;
 
 /**
  * Standard PEAR exception is used if GPG binary is not found.
  */
-require_once 'PEAR/Exception.php';
+//require_once 'PEAR/Exception.php';
+//use AppBundle\Utils\Crypt\Crypt\GPG\PEAR_Exception;
 
 // {{{ class Crypt_GPG_Engine
 
