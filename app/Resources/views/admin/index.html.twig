@@ -3,21 +3,47 @@
 {% block stylesheets %}
     {{ parent() }}
     {#<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/datatables.min.css"/>#}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+    {#<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>#}
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/datatables.min.css"/>
+
 {% endblock %}
 
 {% block body %}
     </div>
     <div class="container-fluid admin">
-    <h4 class="my-5">Registry data base</h4>
+    <h4 class="my-5">SIGMAP Registry</h4>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info mb-5" data-toggle="modal" data-target="#emailsModal">
+            <i class="fa fa-envelope"></i> Participant's emails
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="emailsModal" tabindex="-1" role="dialog" aria-labelledby="emailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="emailsModalLabel">SIGMAP 2018 Emails</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body py-5">
+                        {% for user in users %}
+                            {{ user.email }}{{ not loop.last ? ',' }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <table id="registry" class="table table-sm table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr class="text-center">
                 <th>Name</th>
+                <th>Email</th>
                 <th>Citizenship</th>
-                <th>value</th>
                 <th>is Student</th>
                 <th>Support</th>
                 <th>Talk</th>
@@ -27,11 +53,11 @@
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('admin_show', { 'slug': user.slug }) }}">{{ user.name  }} {{ user.surname }}</a></td>
+                <td>{{ user.email }}</td>
                 <td>{{ user.citizenship }}</td>
-                <td>{{ user.student }}</td>
                 <td class="text-center">{{ user.student == 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'}}</td>
                 <td class="text-center">{{ user.support ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'}}</td>
-                <td>{{ user.title ? user.title: 'No'}}</td>
+                <td>{{ user.title ? user.title: ''}}</td>
 
             </tr>
 
@@ -49,12 +75,53 @@
 {% block javascripts %}
     {{ parent() }}
     {#<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/datatables.min.js"></script>#}
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    {#<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>#}
+    {#<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>#}
+    {#<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>#}
+    {#<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.bootstrap4.min.js"></script>#}
+
+    {#<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>#}
+    {#<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>#}
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/b-html5-1.5.1/datatables.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            $('#registry').DataTable();
+            $('#registry').DataTable({
+                // dom: 'Bfrtip',
+                // buttons: [
+                //     'copy', 'excel', 'pdf'
+                // ]
+                // dom: 'Bfrtip',
+                // buttons: [
+                //     'copy', 'csv', 'excel', 'pdf', 'print'
+                // ],
+
+                // initComplete: function () {
+                //     this.api().columns().every( function () {
+                //         var column = this;
+                //         var select = $('<select><option value=""></option></select>')
+                //             .appendTo( $(column.footer()).empty() )
+                //             .on( 'change', function () {
+                //                 var val = $.fn.dataTable.util.escapeRegex(
+                //                     $(this).val()
+                //                 );
+                //                 column
+                //                     .search( val ? '^'+val+'$' : '', true, false )
+                //                     .draw();
+                //             } );
+                //         column.data().unique().sort().each( function ( d, j ) {
+                //             select.append( '<option value="'+d+'">'+d+'</option>' )
+                //         } );
+                //     } );
+                // }
+            } );
+            // table.buttons().container()
+            //     .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
         } );
+
+
     </script>
 {% endblock %}

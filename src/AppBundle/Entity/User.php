@@ -12,6 +12,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="fos_user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ *
  */
 class User extends BaseUser
 {
@@ -124,6 +126,13 @@ class User extends BaseUser
      * @ORM\Column(name="accepted", type="boolean", nullable=true)
      */
     protected $accepted;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="poster", type="boolean", nullable=true)
+     */
+    protected $poster;
 
     /**
      * @Gedmo\Slug(fields={"name", "surname"}, updatable=false)
@@ -502,6 +511,29 @@ class User extends BaseUser
     public function getAccepted()
     {
         return $this->accepted;
+    }
+
+    /**
+     * Set poster
+     *
+     * @param boolean $poster
+     * @return User
+     */
+    public function setPoster($poster)
+    {
+        $this->poster = $poster;
+
+        return $this;
+    }
+
+    /**
+     * Get poster
+     *
+     * @return boolean
+     */
+    public function getPoster()
+    {
+        return $this->poster;
     }
 
     /**

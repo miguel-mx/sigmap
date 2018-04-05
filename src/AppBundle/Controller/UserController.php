@@ -132,6 +132,27 @@ class UserController extends Controller
         ));
     }
 
+    /**
+     * Displays a form to edit an existing User entity.
+     *
+     * @Route("/{slug}/poster", name="user_poster")
+     * @Method({"GET"})
+     */
+    public function posterAction(Request $request, User $user)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $user->setPoster(1);
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Your poster request has been saved!'
+            );
+
+            return $this->redirectToRoute('user_index');
+    }
+
 
     /**
      * Deletes a User entity.

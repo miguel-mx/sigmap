@@ -25,6 +25,8 @@ class PaymentController extends Controller
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $payments = $em->getRepository('AppBundle:Payment')->findAll();
@@ -57,6 +59,7 @@ class PaymentController extends Controller
      */
     public function newAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
@@ -75,11 +78,22 @@ class PaymentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $payment->setUser($user);
-            $payment->setIdproducto('simap0001');
+            $payment->setIdproducto('198');
             $payment->setIsocode('en');
 
-            // Esperar respuesta de la tienda
-            $payment->setResponse('200');
+            $loger = $this->get('logger');
+            $loger->info('Inicio send to Ciencias');
+
+            // Respuesta_fciencias
+            $respuesta_fciencias = $this->sendToPrometeo($payment);
+
+            $loger->info('Respuesta Facultad de Ciencias');
+            $loger->info($respuesta_fciencias);
+
+            $respuesta_array = json_decode($respuesta_fciencias, true);
+
+            // Comentar ésto
+            $payment->setResponse($respuesta_fciencias);
 
 //            $em = $this->getDoctrine()->getManager();
 //            $em->persist($payment);
@@ -90,19 +104,12 @@ class PaymentController extends Controller
 //                'Your payment information was sent! ' . $response
 //            );
 
-            $loger = $this->get('logger');
-            $loger->info('Inicio send to Ciencias');
-
-            $criptograma = $this->sendToPrometeo($payment);
-
-            $loger->info('Respuesta criptograma');
-            $loger->info($criptograma);
-
-            //return $this->redirectToRoute('user_index');
-
 //            return $this->redirectToRoute('payment_show', array('id' => $payment->getId()));
-            return $this->render('payment/test.html.twig', array('payment' => $payment,
-                'criptograma' => $criptograma,
+
+            return $this->render('payment/test.html.twig', array(
+                'payment' => $payment,
+                'respuesta_fciencias' => $respuesta_fciencias,
+                'respuesta_array' => $respuesta_array,
             ));
         }
 
@@ -252,33 +259,34 @@ class PaymentController extends Controller
             exit(1);
         }
 
-        return $criptograma;
+        //return $criptograma;
 
         // Envío de información a Prometeo
         // ---------------------------------------------------
-//        $ch = curl_init($this->generateUrl('payment_data'));
-//
-//        curl_setopt_array($ch, array(
-//            CURLOPT_POST => TRUE,
-//            CURLOPT_RETURNTRANSFER => TRUE,
-//            CURLOPT_HTTPHEADER => array(
-//                'Content-Type: application/json',
-//                'Content-Length: ' . strlen($criptograma)
-//            ),
-//            CURLOPT_POSTFIELDS => $criptograma,
-//            CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-//            CURLOPT_SSL_VERIFYPEER => false
-//        ));
-//
-//        $response = curl_exec($ch);
-//        // Check for errors
-//        if($response === FALSE){
-//            die(curl_error($ch));
-//        }
-//        else{
-////            var_dump(json_decode($response,true));
-//            return $response;
-//        }
-    }
+        $ch = curl_init('https://tiendad.fciencias.unam.mx/serviciosweb/WSAddClient.php');
 
+        curl_setopt_array($ch, array(
+            CURLOPT_POST => TRUE,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($criptograma)
+            ),
+            CURLOPT_POSTFIELDS => $criptograma,
+            CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+            CURLOPT_SSL_VERIFYPEER => false
+        ));
+
+        $response = curl_exec($ch);
+
+        // Check for errors
+        if($response === FALSE){
+            die(curl_error($ch));
+        }
+        else{
+            //var_dump(json_decode($response,true));
+            //return json_decode($response,true);
+            return $response;
+        }
+    }
 }

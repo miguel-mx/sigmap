@@ -19,79 +19,74 @@
                 {#</div>#}
             {#</section>#}
 
-            <a href="{{ path('admin_index') }}">Back</a>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Admin</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ user.name }} {{ user.surname }}</li>
+                </ol>
+            </nav>
+            {#{% if user.payment %}#}
+                {#<div class="alert alert-success my-4"><i class="fa fa-check"></i> Payment sent</div>#}
+            {#{% else %}#}
+                {#<div class="alert alert-warning my-4"><i class="fa fa-minus-circle"></i> Payment pending</div>#}
+            {#{% endif %}#}
             <div class="row">
                 <div class="col-md-6">
                     <div class="card border-3">
-                        <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b></h5></div>
+                        <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b><br>
+                                <small class="text-muted">{{ user.email }}</small></h5></div>
                         <div class="card-body text-secondary">
                             {{ user.affiliation }}<br>
                             {{ user.citizenship }}<br>
                             Student: {{ user.student ? 'Yes': 'No' }}<br>
                             Arrival date: {{ user.arrival ? user.arrival|date('Y-m-d') : 'Not set' }}<br>
                             Departure date: {{ user.arrival ? user.departure|date('Y-m-d') : 'Not set' }}<br>
+                            Dietary restrictions: {{ user.diet }}<br>
                         </div>
                     </div>
-
                 </div>
-                <div class="col-md-6">
-                    <h5 class="mb-3 text-primary"><b>Finantial support</b></h5>
-                    {% if user.student %}
-                        {% if user.support %}
+                {% if user.support %}
+                    <div class="col-md-6">
+                        <h5 class="mb-3 text-primary"><b>Finantial support</b></h5>
+                        {% if user.student %}
+                            {% if user.support %}
 
-                            {{ user.support.type }}<br>
-                            {{ user.support.studies }}<br>
+                                {{ user.support.type }}<br>
+                                {{ user.support.studies }}<br>
 
-                            ** Botón evaluar
+                                {#** Botón evaluar#}
 
+                            {% else %}
+                                <p class="my-1 text-muted">
+                                    No
+                                </p>
+
+                            {% endif %}
                         {% else %}
-                            <p class="my-1 text-muted">
-                                No
-                            </p>
 
                         {% endif %}
-                    {% else %}
-
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="row my-5">
-                <div class="col-md-12">
-                    <h5 class="mb-3 text-primary"><b>Talk Proposal</b></h5>
-
-                    {#{% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}#}
-
-                    {% if user.abstract %}
-
-                        <h3 class="mt-4 py-2 border-bottom">{{ user.title }}</h3>
-                        <p class="my-3">
-                        <h5 class="text-muted">Abstract</h5>
-                        {{ user.abstract|raw }}
-                        </p>
-                        <p>** Botón evaluar</p>
-                    {% else %}
-                        No
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Talk Modal -->
-            <div class="modal fade" id="talkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Abstract submission</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            {% render controller("AppBundle:User:talkEdit", {'slug': user.slug}) %}
-                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
+
+            {% if user.poster %}
+                <h4 class="my-4"><i class="fa fa-check text-success"></i> Poster</h4>
+            {% endif %}
+
+            {% if user.abstract %}
+
+                <h3 class="py-2 border-bottom">{{ user.title }}</h3>
+                <p class="my-3">
+                <h5 class="text-muted">Abstract</h5>
+                {{ user.abstract|raw }}
+                </p>
+
+                <button type="button" class="btn btn-primary my-5" data-toggle="modal" data-target="#evalModal">
+                    <i class="fa fa-check" aria-hidden="true"></i> Evaluate
+                </button>
+            {% endif %}
+
+
         </div>
 
     {% block javascripts %}

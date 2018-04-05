@@ -146,7 +146,7 @@ class Payment
     /**
      * @var string
      *
-     * @ORM\Column(name="response", type="string", length=90)
+     * @ORM\Column(name="response", type="string", length=200)
      */
     private $response;
 

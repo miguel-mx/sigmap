@@ -3,9 +3,16 @@
 {% block body %}
 
     <h2>Data test</h2>
-    {{ dump(criptograma) }}
+    {#{{ dump(payment) }}#}
 
     <hr>
-    {{ dump(payment) }}
+    <h2>Response</h2>
+    {{ dump(respuesta_fciencias) }}
+    <br>
+    {{ dump(respuesta_array) }}
+
+    <div class="alert alert-primary">
+        <h1>{{ respuesta_array['success'].code }}: {{ respuesta_array['success'].reason }}</h1>
+    </div>
 
 {% endblock %}
