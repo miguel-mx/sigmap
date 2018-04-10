@@ -69,6 +69,30 @@
                 {% endif %}
             </div>
 
+            {% if user.payment %}
+            <div id="accordion">
+                <div class="card my-4">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa fa-check text-success"></i> <strong>Payment</strong>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <p>Reference: {{ user.payment.reference }}</p>
+                            <p>Date: {{ user.payment.date|date("F d, Y") }}</p>
+                            <p>Amount: {{ user.payment.paid }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <div class="alert alert-warning">Payment pending</div>
+            {% endif %}
+
             {% if user.poster %}
                 <h4 class="my-4"><i class="fa fa-check text-success"></i> Poster</h4>
             {% endif %}
@@ -85,8 +109,6 @@
                     <i class="fa fa-check" aria-hidden="true"></i> Evaluate
                 </button>
             {% endif %}
-
-
         </div>
 
     {% block javascripts %}

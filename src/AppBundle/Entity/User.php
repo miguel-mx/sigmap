@@ -582,4 +582,9 @@ class User extends BaseUser
     {
         return $this->payment;
     }
+
+    public function __toString()
+    {
+        return $this->getName() . ' ' . $this->getSurname();
+    }
 }

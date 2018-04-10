@@ -39,6 +39,9 @@ class PrometeoController extends Controller
      */
     public function newAction(Request $request)
     {
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
         $prometeo = new Prometeo();
         $form = $this->createForm('AppBundle\Form\PrometeoType', $prometeo);
         $form->handleRequest($request);
