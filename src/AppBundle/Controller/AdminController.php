@@ -7,7 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
+use AppBundle\Entity\Prometeo;
+
 
 /**
  * Admin controller.
@@ -24,12 +25,19 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
+        $user = $this->getUser();
+        $lastLogin = $user->getLastLogin()->format("Y-m-d");
 
         $em = $this->getDoctrine()->getManager();
 
         $users = $em->getRepository('AppBundle:User')->findAll();
 
+        $payments = $em->getRepository('AppBundle:Prometeo')->findPaymentsbyDate($lastLogin);
+        $last_registrations = $em->getRepository('AppBundle:User')->findUsersbyDate($lastLogin);
+
         return $this->render('admin/index.html.twig', array(
+            'last_registrations' => $last_registrations,
+            'payments' => $payments,
             'users' => $users,
         ));
     }

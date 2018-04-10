@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Prometeos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Date</th>
+                <th>Idproducto</th>
+                <th>Paid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prometeo in prometeos %}
+            <tr>
+                <td><a href="{{ path('prometeo_show', { 'id': prometeo.id }) }}">{{ prometeo.id }}</a></td>
+                <td>{{ prometeo.reference }}</td>
+                <td>{% if prometeo.date %}{{ prometeo.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ prometeo.idproducto }}</td>
+                <td>{{ prometeo.paid }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('prometeo_show', { 'id': prometeo.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('prometeo_edit', { 'id': prometeo.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('prometeo_new') }}">Create a new prometeo</a>
+        </li>
+    </ul>
+{% endblock %}

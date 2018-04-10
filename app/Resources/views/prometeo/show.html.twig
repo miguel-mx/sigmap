@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Prometeo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prometeo.id }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ prometeo.reference }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{% if prometeo.date %}{{ prometeo.date|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idproducto</th>
+                <td>{{ prometeo.idproducto }}</td>
+            </tr>
+            <tr>
+                <th>Paid</th>
+                <td>{{ prometeo.paid }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('prometeo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('prometeo_edit', { 'id': prometeo.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

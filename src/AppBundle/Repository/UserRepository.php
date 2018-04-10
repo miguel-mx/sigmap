@@ -34,5 +34,14 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             )
             ->getResult();
     }
+
+    public function findUsersbyDate($date)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT u FROM AppBundle:User u WHERE u.createdAt >= :date ORDER BY u.createdAt ASC')
+            ->setParameter('date', $date)
+            ->getResult();
+    }
 }
 

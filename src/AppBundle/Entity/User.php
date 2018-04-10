@@ -148,7 +148,7 @@ class User extends BaseUser
 
     /**
      * One User has One Payment.
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Payment", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Prometeo", mappedBy="user")
      */
     private $payment;
 
@@ -562,11 +562,11 @@ class User extends BaseUser
     /**
      * Set payment
      *
-     * @param \AppBundle\Entity\Payment $payment
+     * @param \AppBundle\Entity\Prometeo $payment
      *
      * @return User
      */
-    public function setPayment(\AppBundle\Entity\Payment $payment = null)
+    public function setPayment(\AppBundle\Entity\Prometeo $payment = null)
     {
         $this->payment = $payment;
 
@@ -576,7 +576,7 @@ class User extends BaseUser
     /**
      * Get payment
      *
-     * @return \AppBundle\Entity\Payment
+     * @return \AppBundle\Entity\Prometeo
      */
     public function getPayment()
     {

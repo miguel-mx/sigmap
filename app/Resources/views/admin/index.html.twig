@@ -19,6 +19,26 @@
             <i class="fa fa-envelope"></i> Participant's emails
         </button>
 
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <h4>Last payments</h4>
+                <table class="table table-sm small">
+                    {% for payment in payments %}
+                        <tr><td>{{ payment.date|date('F d, Y') }}</td><td>{{ payment.paid }}</td><td><a href="{{ path('admin_show', { 'slug': payment.user.slug }) }}">{{ payment.user.name }} {{ payment.user.surname }}</a></td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <h4>Last registrations</h4>
+                <table class="table table-sm small">
+                    {% for registry in last_registrations %}
+                        <tr><td>{{ registry.createdAt|date('F d, Y') }}</td><td><a href="{{ path('admin_show', { 'slug': registry.slug }) }}">{{ registry.name }} {{ registry.surname }}</a></td><td>{{ registry.affiliation }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+
         <!-- Modal -->
         <div class="modal fade" id="emailsModal" tabindex="-1" role="dialog" aria-labelledby="emailsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">

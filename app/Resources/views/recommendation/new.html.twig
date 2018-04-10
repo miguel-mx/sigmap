@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-8">
+        <div class="col-md-8 col-sm-12">
 
             <h4 class="text-mute my-4">Recommendation for <small class="text-muted"><strong>{{ user.name }} {{ user.surname }}</strong></small></h4>
 
@@ -16,10 +16,10 @@
                 <p class="text-muted">1) What is your academic relationship with {{ user.name }} {{ user.surname }}?</p>
                 <span class="text-danger">{{ form_errors(form.relationships) }}</span>
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 col-sm-12">
                         {{ form_widget(form.relationships, {'attr': {'class': 'form-control'}}) }}<br>
                     </div>
-                    <div class="col-8">
+                    <div class="col-md-8 col-sm-12">
                         {{ form_widget(form.relationship, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                 <p class="text-muted">4) Rank from 1 to 5 how helpful do you think that SIGMAP 2018 may be for {{ user.name }} {{ user.surname }}.</p>
                 <span class="text-danger">{{ form_errors(form.rank) }}</span>
                 <div class="row>">
-                    <div class="col-2">
+                    <div class="col-md-3 col-lg-2 col-sm-12">
                     {{ form_widget(form.rank, {'attr': {'class': 'form-control', 'value': '5'}}) }}
                     </div>
                 </div>
