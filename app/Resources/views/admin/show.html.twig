@@ -118,17 +118,16 @@
             {% endif %}
 
             {% if user.payment %}
-            <div id="accordion">
                 <div class="card my-4">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapsePayment" aria-expanded="true" aria-controls="collapsePayment">
                                 <i class="fa fa-check text-success"></i> <strong>Payment</strong>
                             </button>
                         </h5>
                     </div>
 
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div id="collapsePayment" class="collapse" aria-labelledby="headingOne">
                         <div class="card-body">
                             <p>Reference: {{ user.payment.reference }}</p>
                             <p>Date: {{ user.payment.date|date("F d, Y") }}</p>
@@ -136,7 +135,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             {% else %}
                 <div class="alert alert-warning my-4"><i class="fa fa-exclamation-triangle"></i> Payment pending</div>
             {% endif %}
@@ -163,17 +161,18 @@
             {% endif %}
         </div>
 
-    {% block javascripts %}
+{% endblock %}
 
-        {{ parent() }}
-        <script type="text/x-mathjax-config">
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
             tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
         });
     </script>
-        <script type="text/javascript" async
-                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-        </script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
 
-    {% endblock %}
 {% endblock %}
