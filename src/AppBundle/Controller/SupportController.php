@@ -79,15 +79,6 @@ class SupportController extends Controller
             // Email recomendaciones
             $mailer = $this->get('mailer');
 
-//            $message = \Swift_Message::newInstance()
-//                ->setSubject('SIGMAP 2018 Support')
-//                ->setFrom('sigmap2018@matmor.unam.mx')
-//                ->setTo(array($support->getMail()))
-//                ->setBcc(array('rudos@matmor.unam.mx'))
-//                ->setBody($this->renderView('support/support-confirmation.txt.twig', array('entity' => $support)))
-//            ;
-//            $mailer->send($message);
-
             $subject = 'Request for recommendation letter for ' . $user->getName(). ' ' .$user->getSurname();
 
             // Envía correo de solicitud de recomendación 1
@@ -146,6 +137,29 @@ class SupportController extends Controller
             'support' => $support,
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Change grant status
+     *
+     * @Route("/{id}/grant", name="support_grant")
+     * @Method("GET")
+     */
+    public function grantAction(Support $support)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        if($support->getApproved())
+            $support->setApproved(0);
+        else
+            $support->setApproved(1);
+
+        $em->persist($support);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_show', array('slug' => $support->getUser()->getSlug()));
     }
 
     /**

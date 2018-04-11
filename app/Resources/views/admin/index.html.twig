@@ -12,29 +12,80 @@
 {% block body %}
     </div>
     <div class="container-fluid admin">
-    <h4 class="my-5">SIGMAP Registry</h4>
+    <h4 class="my-4">SIGMAP Registry</h4>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-info mb-5" data-toggle="modal" data-target="#emailsModal">
+        <button type="button" class="btn btn-info mb-4" data-toggle="modal" data-target="#emailsModal">
             <i class="fa fa-envelope"></i> Participant's emails
         </button>
 
         <div class="row">
             <div class="col-md-4 col-sm-12">
-                <h4>Last payments</h4>
-                <table class="table table-sm small">
-                    {% for payment in payments %}
-                        <tr><td>{{ payment.date|date('F d, Y') }}</td><td>{{ payment.paid }}</td><td><a href="{{ path('admin_show', { 'slug': payment.user.slug }) }}">{{ payment.user.name }} {{ payment.user.surname }}</a></td></tr>
-                    {% endfor %}
-                </table>
+                <h4 class="text-secondary">Last payments</h4>
+                {% if payments %}
+                    <table class="table table-sm small">
+                        {% for payment in payments %}
+                            <tr><td>{{ payment.date|date('F d, Y') }}</td><td>{{ payment.paid }}</td><td><a href="{{ path('admin_show', { 'slug': payment.user.slug }) }}">{{ payment.user.name }} {{ payment.user.surname }}</a></td></tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p class="text-secondary">There are no new payments since last login.</p>
+                {% endif %}
             </div>
             <div class="col-md-4 col-sm-12">
-                <h4>Last registrations</h4>
+                <h4 class="text-secondary">Last registrations</h4>
+                {% if last_registrations %}
                 <table class="table table-sm small">
                     {% for registry in last_registrations %}
                         <tr><td>{{ registry.createdAt|date('F d, Y') }}</td><td><a href="{{ path('admin_show', { 'slug': registry.slug }) }}">{{ registry.name }} {{ registry.surname }}</a></td><td>{{ registry.affiliation }}</td></tr>
                     {% endfor %}
                 </table>
+                {% else %}
+                    <p class="text-secondary">There are no new registries since last login.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body text-info">
+                        Records
+                        <h1>{{ users|length }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body text-info">
+                        Students
+                        <h1>{{ totalStudents }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body text-info">
+                        Talks
+                        <h1>{{ totalTalks }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body text-info">
+                        Posters
+                        <h1>{{ totalPosters }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body text-info">
+                        Payments
+                        <h1>{{ totalPayments }}</h1>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -84,12 +135,6 @@
         {% endfor %}
         </tbody>
     </table>
-
-    {#<ul>#}
-        {#<li>#}
-            {#<a href="{{ path('support_new') }}">Create a new entry</a>#}
-        {#</li>#}
-    {#</ul>#}
 {% endblock %}
 
 {% block javascripts %}

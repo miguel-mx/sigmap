@@ -11,6 +11,13 @@ namespace AppBundle\Repository;
  */
 class PaymentRepository extends \Doctrine\ORM\EntityRepository
 {
-
+    public function countPayments()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(p.id)  FROM AppBundle:Payment p'
+            )
+            ->getSingleScalarResult();
+    }
 
 }

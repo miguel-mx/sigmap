@@ -8,66 +8,114 @@
                 </div>
             {% endfor %}
 
-            {#<section class="jumbotron text-center">#}
-                {#<div class="dash-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">#}
-                    {#<h1 class="display-4 text-muted">SIGMAP 2018</h1>#}
-                    {#<p class="lead">#}
-                        {#<span class="text-muted">Monday June 25th to Friday June 29th, 2018.</span><br><br>#}
-
-                        {#The edition 2018 of the workshop Symmetries in Graphs, Maps and Polytopes (SIGMAP) will be held at the Campus in Morelia of the National Autonomous University of Mexico.#}
-                    {#</p>#}
-                {#</div>#}
-            {#</section>#}
-
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Admin</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ user.name }} {{ user.surname }}</li>
                 </ol>
             </nav>
-            {#{% if user.payment %}#}
-                {#<div class="alert alert-success my-4"><i class="fa fa-check"></i> Payment sent</div>#}
-            {#{% else %}#}
-                {#<div class="alert alert-warning my-4"><i class="fa fa-minus-circle"></i> Payment pending</div>#}
-            {#{% endif %}#}
+
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="card border-3">
                         <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b><br>
                                 <small class="text-muted">{{ user.email }}</small></h5></div>
                         <div class="card-body text-secondary">
-                            {{ user.affiliation }}<br>
+                            <strong>{{ user.affiliation }}</strong><br>
                             {{ user.citizenship }}<br>
                             Student: {{ user.student ? 'Yes': 'No' }}<br>
-                            Arrival date: {{ user.arrival ? user.arrival|date('Y-m-d') : 'Not set' }}<br>
-                            Departure date: {{ user.arrival ? user.departure|date('Y-m-d') : 'Not set' }}<br>
+                            Arrival date: <strong>{{ user.arrival ? user.arrival|date('F d, Y') : 'Not set' }}</strong><br>
+                            Departure date: <strong>{{ user.arrival ? user.departure|date('F d, Y') : 'Not set' }}</strong><br>
                             Dietary restrictions: {{ user.diet }}<br>
                         </div>
                     </div>
                 </div>
-                {% if user.support %}
-                    <div class="col-md-6">
-                        <h5 class="mb-3 text-primary"><b>Finantial support</b></h5>
-                        {% if user.student %}
-                            {% if user.support %}
-
-                                {{ user.support.type }}<br>
-                                {{ user.support.studies }}<br>
-
-                                {#** Botón evaluar#}
-
-                            {% else %}
-                                <p class="my-1 text-muted">
-                                    No
-                                </p>
-
-                            {% endif %}
-                        {% else %}
-
-                        {% endif %}
-                    </div>
-                {% endif %}
             </div>
+            {% if user.support %}
+                <div class="card mt-4">
+                    <div class="card-header"><h5 class="text-primary"><b>Finantial support</b></h5></div>
+                    <div class="card-body text-secondary">
+                        <div class="row">
+                            <div class="col-md-5 col-xs-12">
+                                {% if user.support %}
+                                    <p class="lead"><strong>{{ user.support.type }}</strong></p>
+                                    <p>{{ user.support.studies }}</p>
+                                    {# Recommendations #}
+                                    {% if user.support.recommendations|length > 0 %}
+                                        <p>Recommendation received from:</p>
+                                        <ul>
+                                            {% for rec in user.support.recommendations %}
+                                                <li>{{ rec.email }} <i class="fa fa-check text-success"></i></li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <div class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> No recommendations received.</div>
+                                    {% endif %}
+
+                                    {% if user.support.approved %}
+                                        <p class="lead border-top pt-3"><i class="fa fa-check text-success"></i> Granted</p>
+                                        <a class="btn btn-danger btn-sm" href="{{ path('support_grant', { 'id': user.support.id }) }}" role="button"><i class="fa fa-times" aria-hidden="true"></i> Cancel Support</a>
+                                    {% else %}
+                                        <p class="lead border-top pt-3"><i class="fa fa-times text-danger"></i> Not granted</p>
+                                        <a class="btn btn-success btn-sm" href="{{ path('support_grant', { 'id': user.support.id }) }}" role="button"><i class="fa fa-check" aria-hidden="true"></i> Grant Support</a>
+                                    {% endif %}
+
+                                {% else %}
+                                    <p class="my-1 text-muted">
+                                        No
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-7 col-xs-12">
+                                <h4>Reasons:</h4>
+                                <p class="text-disabled">{{ user.support.reasons }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if user.support.recommendations|length > 0 %}
+                <div id="recommendations">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#recommOne" aria-expanded="false" aria-controls="recommOne">
+                                    <strong>Reccomendations</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="recommOne" class="collapse text-secondary" aria-labelledby="recHeadingOne" data-parent="#recommendations">
+                            <div class="card-body">
+                                {% for recommendation in user.support.recommendations %}
+                                    {% if recommendation.email == user.support.mailprof1 %}
+                                        <div class="border-bottom py-3"><strong>{{ user.support.prof1 }}</strong> {{ recommendation.email }}</div>
+                                    {% elseif recommendation.email == user.support.mailprof2 %}
+                                        <div class="border-bottom py-3"><strong>{{ user.support.prof1 }}</strong> {{ recommendation.email }}</div>
+                                    {% endif %}
+                                    <br>
+                                    <div class="row mb-3">
+                                        <div class="col-md-2 text-right"><strong>Relationship:</strong></div><div class="col-md-10">{{ recommendation.relationship }}</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-2 text-right"><strong>Description:</strong></div><div class="col-md-10">{{ recommendation.description }}</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-2 text-right"><strong>Skills:</strong></div><div class="col-md-10">{{ recommendation.skills }}</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-2 text-right"><strong>Rank:</strong></div><div class="col-md-10">{{ recommendation.rank }}</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-2 text-right"><strong>Comments:</strong></div><div class="col-md-10">{{ recommendation.comments }}</div>
+                                    </div>
+                                    <small>{{ recommendation.createdAt|date("F, Y") }}</small>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endif %}
 
             {% if user.payment %}
             <div id="accordion">
@@ -90,7 +138,7 @@
                 </div>
             </div>
             {% else %}
-                <div class="alert alert-warning">Payment pending</div>
+                <div class="alert alert-warning my-4"><i class="fa fa-exclamation-triangle"></i> Payment pending</div>
             {% endif %}
 
             {% if user.poster %}
@@ -105,9 +153,13 @@
                 {{ user.abstract|raw }}
                 </p>
 
-                <button type="button" class="btn btn-primary my-5" data-toggle="modal" data-target="#evalModal">
-                    <i class="fa fa-check" aria-hidden="true"></i> Evaluate
-                </button>
+                {% if user.accepted %}
+                    <p class="lead"><i class="fa fa-check text-success"></i> Accepted</p>
+                    <a class="btn btn-danger my-3" href="{{ path('talk-acceptance', { 'slug': user.slug }) }}" role="button"><i class="fa fa-times" aria-hidden="true"></i> Cancel talk</a>
+                {% else %}
+                    <a class="btn btn-success my-3" href="{{ path('talk-acceptance', { 'slug': user.slug }) }}" role="button"><i class="fa fa-check" aria-hidden="true"></i> Accept talk</a>
+                {% endif %}
+
             {% endif %}
         </div>
 

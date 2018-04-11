@@ -31,11 +31,19 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $users = $em->getRepository('AppBundle:User')->findAll();
+        $totalStudents = $em->getRepository('AppBundle:User')->countStudents();
+        $totalTalks = $em->getRepository('AppBundle:User')->countTalks();
+        $totalPosters = $em->getRepository('AppBundle:User')->countPosters();
+        $totalPayments = $em->getRepository('AppBundle:Payment')->countPayments();
 
         $payments = $em->getRepository('AppBundle:Prometeo')->findPaymentsbyDate($lastLogin);
         $last_registrations = $em->getRepository('AppBundle:User')->findUsersbyDate($lastLogin);
 
         return $this->render('admin/index.html.twig', array(
+            'totalStudents' => $totalStudents,
+            'totalTalks' => $totalTalks,
+            'totalPosters' => $totalPosters,
+            'totalPayments' => $totalPayments,
             'last_registrations' => $last_registrations,
             'payments' => $payments,
             'users' => $users,

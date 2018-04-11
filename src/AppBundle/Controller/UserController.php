@@ -133,6 +133,29 @@ class UserController extends Controller
     }
 
     /**
+     * Change Talk acceptance
+     *
+     * @Route("/{slug}/talk-acceptance", name="talk-acceptance")
+     * @Method("GET")
+     */
+    public function grantAction(User $user)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        if($user->getAccepted())
+            $user->setAccepted(0);
+        else
+            $user->setAccepted(1);
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_show', array('slug' => $user->getSlug()));
+    }
+
+    /**
      * Displays a form to edit an existing User entity.
      *
      * @Route("/{slug}/poster", name="user_poster")

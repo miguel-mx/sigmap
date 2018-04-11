@@ -43,5 +43,34 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('date', $date)
             ->getResult();
     }
+
+    public function countStudents()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(u.id)  FROM AppBundle:User u WHERE u.student = true'
+            )
+            ->getSingleScalarResult();
+    }
+
+    public function countTalks()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(u.id)  FROM AppBundle:User u WHERE u.title IS NOT NULL'
+            )
+            ->getSingleScalarResult();
+    }
+
+    public function countPosters()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(u.id)  FROM AppBundle:User u WHERE u.poster IS NOT NULL'
+            )
+            ->getSingleScalarResult();
+    }
+
+
 }
 
