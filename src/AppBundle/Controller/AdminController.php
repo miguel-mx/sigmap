@@ -34,7 +34,7 @@ class AdminController extends Controller
         $totalStudents = $em->getRepository('AppBundle:User')->countStudents();
         $totalTalks = $em->getRepository('AppBundle:User')->countTalks();
         $totalPosters = $em->getRepository('AppBundle:User')->countPosters();
-        $totalPayments = $em->getRepository('AppBundle:Payment')->countPayments();
+        $totalPayments = $em->getRepository('AppBundle:Prometeo')->countPayments();
 
         $payments = $em->getRepository('AppBundle:Prometeo')->findPaymentsbyDate($lastLogin);
         $last_registrations = $em->getRepository('AppBundle:User')->findUsersbyDate($lastLogin);

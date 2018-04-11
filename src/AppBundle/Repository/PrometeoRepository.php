@@ -20,4 +20,13 @@ class PrometeoRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function countPayments()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(p.id)  FROM AppBundle:Prometeo p'
+            )
+            ->getSingleScalarResult();
+    }
+
 }
