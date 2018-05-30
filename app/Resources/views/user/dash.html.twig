@@ -28,13 +28,48 @@
                         <div class="card border-3">
                             <div class="card-header"><h5 class="text-primary"><b>{{ user.surname|title }} {{ user.name|title }}</b><small> {{ user.email }}</small></h5></div>
                             <div class="card-body text-secondary">
-                                {{ user.citizenship }}<br>
-                                {{ user.affiliation }}<br>
-                                Student: {{ user.student ? 'Yes': 'No' }}<br>
-                                Arrival date: {{ user.arrival ? user.arrival|date('Y-m-d') : 'Not set' }}<br>
-                                Departure date: {{ user.arrival ? user.departure|date('Y-m-d') : 'Not set' }}<br>
-                                <p class="mt-2 py-2 border-top">Dietary restrictions: {{ user.diet ? user.diet : 'Not set' }}</p>
-                                <a href="{{ path('user_edit', { 'slug': user.slug }) }}" class="btn btn-primary mt-3"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                <div class="row mb-2">
+                                    <div class="col-md-4 text-muted">Citizenship:</div>
+                                    <div class="col-md-8"><strong>{{ user.citizenship }}</strong></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4 text-muted">University:</div>
+                                    <div class="col-md-8"><strong>{{ user.affiliation }}</strong></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4 text-muted">Student:</div>
+                                    <div class="col-md-8"><strong>{{ user.student ? 'Yes': 'No' }}</strong></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4 text-muted">Arrival date:</div>
+                                    <div class="col-md-8"><strong>{{ user.arrival ? user.arrival|date('Y-m-d') : 'Not set' }}</strong></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4 text-muted">Departure date:</div>
+                                    <div class="col-md-8"><strong>{{ user.arrival ? user.departure|date('Y-m-d') : 'Not set' }}</strong></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-4 text-muted">Dietary restrictions:</div>
+                                    <div class="col-md-8"><strong>{{ user.diet ? user.diet : 'Not set' }}</strong></div>
+                                </div>
+                                <a href="{{ path('user_edit', { 'slug': user.slug }) }}" class="btn btn-outline-primary btn-sm mt-2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                <hr>
+                                <p class="bg-info text-white mb-3 p-3">Please let us know whether you and any accompanying person plan to attend the following events (indicate the number of people including yourself)</p>
+                                <div class="row mb-2 border-bottom pb-2">
+                                    <div class="col-md-5 text-muted">Conference dinner:</div>
+                                    <div class="col-md-7 text-large"><strong>{{ user.dinner }}</strong></div>
+                                </div>
+                                <div class="row mb-2 border-bottom pb-2">
+                                    <div class="col-md-5 text-muted">Guided visit to Morelia:</div>
+                                    <div class="col-md-7 text-large"><strong>{{ user.morelia }}</strong></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-5 text-muted">Guided visit to Pátzcuaro:</div>
+                                    <div class="col-md-7 text-large"><strong>{{ user.patzcuaro }}</strong></div>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm mt-2" data-toggle="modal" data-target="#visitModal">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i> Change
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -50,9 +85,14 @@
                             <h5 class="my-3 text-primary"><b>Financial support</b></h5>
 
                             {% if user.support %}
-
-                                Type: {{ user.support.type }}<br>
-                                Degree: {{ user.support.studies }}<br>
+                                <div class="row mb-2 text-muted">
+                                    <div class="col-md-3">Type:</div>
+                                    <div class="col-md-9"><strong>{{ user.support.type }}</strong></div>
+                                </div>
+                                <div class="row mb-2 text-muted">
+                                    <div class="col-md-3">Degree:</div>
+                                    <div class="col-md-9"><strong>{{ user.support.studies }}</strong></div>
+                                </div>
                                 <p class="my-4">
                                     {{ user.support.reasons }}
                                 </p>
@@ -67,8 +107,22 @@
                                 {% else %}
                                     <p class="p-2 bg-warning text-secondary">No recommendations received.</p>
                                 {% endif %}
-                                <p>Support status: <span class="text-warning">pending...</span></p>
+                                <div class="row mb-2">
+                                    <div class="col-md-4 text-muted">Support status: </div>
+                                    <div class="col-md-8">
+                                        {% if user.support %}
+                                            {% if user.support.approved %}
+                                                <span class="text-success"><strong>Approved</strong></span>
+                                            {% else %}
+                                                <span class="text-danger"></strong>Not approved</strong></span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="text-warning">Pending</span>
+                                        {% endif %}
 
+                                    </div>
+                                </div>
+                                {#<p>Support status: <span class="text-warning">pending...</span></p>#}
                             {% else %}
                                 <p class="my-1">
                                     There is a limited fund to support <strong>students</strong>. This can be used to cover the
@@ -76,7 +130,7 @@
                                     transportation to and from Morelia.<br><br>
                                     <strong>The deadline to apply for financial support is May 18, 2018.</strong><br>
                                 </p>
-                                <a href="{{ path('support_new') }}" class="btn btn-primary my-4"><i class="fa fa-check" aria-hidden="true"></i> Apply</a>
+                                <a href="{{ path('support_new') }}" class="btn btn-outline-primary my-4"><i class="fa fa-check" aria-hidden="true"></i> Apply</a>
                             {% endif %}
                         </div>
                     </div>
@@ -204,22 +258,21 @@
                         {% endif %}
 
                         {% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}
-                            <button type="button" class="btn btn-primary" disabled>
+                            <button type="button" class="btn btn-outline-primary" disabled>
                                 <i class="fa fa-check" ></i> Abstract</button>
                         {% else %}
                             {% if user.abstract %}
-
                                 <h3 class="mt-4 py-2 border-bottom">{{ user.title }}</h3>
                                 <p class="my-3">
                                 <h5 class="text-muted">Abstract</h5>
                                 {{ user.abstract|raw }}
                                 </p>
 
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#talkModal">
+                                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#talkModal">
                                     <i class="fa fa-check" aria-hidden="true"></i> Edit abstract
                                 </button>
                             {% else %}
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#talkModal">
+                                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#talkModal">
                                     <i class="fa fa-check" aria-hidden="true"></i> Submit an abstract
                                 </button>
                             {% endif %}
@@ -246,13 +299,13 @@
                         <p>The deadline for registering a poster is June 1, 2018.</p>
 
                         {% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}
-                            <button type="button" class="btn btn-primary" disabled>
+                            <button type="button" class="btn btn-outline-primary" disabled>
                                 <i class="fa fa-check" ></i> Poster</button>
                         {% else %}
                             {% if user.poster %}
                                 <h3><i class="fa fa-check text-success" aria-hidden="true"></i></h3>
                             {% else %}
-                                <a class="btn btn-primary" href="{{ path('user_poster', { 'slug': user.slug }) }}" role="button"><i class="fa fa-check" aria-hidden="true"></i> Submit a poster</a>
+                                <a class="btn btn-outline-primary" href="{{ path('user_poster', { 'slug': user.slug }) }}" role="button"><i class="fa fa-check" aria-hidden="true"></i> Submit a poster</a>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -309,12 +362,29 @@
         {#</div>#}
 
 
-        <!-- Talk Modal -->
-        <div class="modal fade" id="talkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Visti Modal -->
+        <div class="modal fade" id="visitModal" tabindex="-1" role="dialog" aria-labelledby="visitModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Abstract submission</h5>
+                        <h5 class="modal-title" id="visitModalLabel">Dinner and guided visits</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% render controller("AppBundle:User:visitEdit", {'slug': user.slug}) %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Talk Modal -->
+        <div class="modal fade" id="talkModal" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="talkModalLabel">Abstract submission</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

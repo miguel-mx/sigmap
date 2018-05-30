@@ -133,6 +133,47 @@ class UserController extends Controller
     }
 
     /**
+     * Displays a form to edit Visits of an existing User entity.
+     *
+     * @Route("/{slug}/visit-edit", name="visit-edit")
+     * @Method({"GET", "POST"})
+     */
+    public function visitEditAction(Request $request, User $user)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // TODO: Especificar fecha límite
+//        $now = new \DateTime();
+//        $deadline = new \DateTime('2018-06-01');
+//        if($now >= $deadline)
+//            return $this->render(':user:closed.html.twig');
+
+        $editForm = $this->createForm('AppBundle\Form\VisitType', $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!'
+            );
+
+            return $this->redirectToRoute('user_index');
+//            return $this->redirectToRoute('user_edit', array('slug' => $user->getSlug()));
+        }
+
+        return $this->render('user/visit.html.twig', array(
+            'user' => $user,
+            'edit_form' => $editForm->createView(),
+        ));
+    }
+
+    /**
      * Change Talk acceptance
      *
      * @Route("/{slug}/talk-acceptance", name="talk-acceptance")
