@@ -152,6 +152,24 @@ class User extends BaseUser
      */
     private $payment;
 
+    /**
+     * Dinner
+     * @ORM\Column(name="dinner", type="integer", nullable=true)
+     */
+    protected $dinner;
+
+    /**
+     * Morelia Trip
+     * @ORM\Column(name="morelia", type="integer", nullable=true)
+     */
+    protected $morelia;
+
+    /**
+     * Pátzcuaro trip
+     * @ORM\Column(name="patzcuaro", type="integer", nullable=true)
+     */
+    protected $patzcuaro;
+
 
     public function __construct()
     {
@@ -586,5 +604,77 @@ class User extends BaseUser
     public function __toString()
     {
         return $this->getName() . ' ' . $this->getSurname();
+    }
+
+    /**
+     * Set dinner
+     *
+     * @param integer $dinner
+     *
+     * @return User
+     */
+    public function setDinner($dinner)
+    {
+        $this->dinner = $dinner;
+
+        return $this;
+    }
+
+    /**
+     * Get dinner
+     *
+     * @return integer
+     */
+    public function getDinner()
+    {
+        return $this->dinner;
+    }
+
+    /**
+     * Set morelia
+     *
+     * @param integer $morelia
+     *
+     * @return User
+     */
+    public function setMorelia($morelia)
+    {
+        $this->morelia = $morelia;
+
+        return $this;
+    }
+
+    /**
+     * Get morelia
+     *
+     * @return integer
+     */
+    public function getMorelia()
+    {
+        return $this->morelia;
+    }
+
+    /**
+     * Set patzcuaro
+     *
+     * @param integer $patzcuaro
+     *
+     * @return User
+     */
+    public function setPatzcuaro($patzcuaro)
+    {
+        $this->patzcuaro = $patzcuaro;
+
+        return $this;
+    }
+
+    /**
+     * Get patzcuaro
+     *
+     * @return integer
+     */
+    public function getPatzcuaro()
+    {
+        return $this->patzcuaro;
     }
 }

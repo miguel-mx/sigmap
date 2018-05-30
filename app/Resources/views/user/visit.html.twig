@@ -1,0 +1,42 @@
+{{ form_start(edit_form, {'action': path('visit-edit', { 'slug': user.slug })}) }}
+
+    <p class="lead mb-4">Indicate the number of people including yourself.</p>
+
+    <p>The conference dinner will be a buffet at the Campanario Cafe, where we can enjoy our dinner with a great
+        view of the cathedral and neighbouring buildings. Its approximate cost will be MX$300.00.</p>
+    <p>(MX$150.00 for students).</p>
+
+    <div class="form-group row mb-4">
+        <label for="inputDinner" class="col-form-label col-md-4 col-sm-12">Dinner</label>
+        <div class="col-md-3 col-sm-12">
+            {{ form_widget(edit_form.dinner, {'attr': {'class': 'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(edit_form.dinner) }}</span>
+        </div>
+    </div>
+
+    <p>On Tuesday evening we will have a short guided tour in down town Morelia that includes old local legends. It's
+        approximate cost will be MX$200.00 per person.</p>
+
+    <div class="form-group row mb-4">
+        <label for="inputMorelia" class="col-form-label col-md-4 col-sm-12">Guided visit to Morelia</label>
+        <div class="col-md-3 col-sm-12">
+            {{ form_widget(edit_form.morelia, {'attr': {'class': 'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(edit_form.morelia) }}</span>
+        </div>
+    </div>
+
+    <p>On Wednesday, on the free afternoon, we will go to Tzintzuntzan and Patzcuaro. The former is an archeological zone
+        and the latter a typical Mexican town. Its approximate cost will be MX$250.00 per person.</p>
+
+    <div class="form-group row mb-4">
+        <label for="inputPatzcuaro" class="col-form-label col-md-4 col-sm-12">Guided visit to Patzcuaro</label>
+        <div class="col-md-3 col-sm-12">
+            {{ form_widget(edit_form.patzcuaro, {'attr': {'class': 'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(edit_form.patzcuaro) }}</span>
+        </div>
+    </div>
+
+<input type="submit" value="Save"  class="btn btn-primary"/>
+<button type="button" class="btn btn-warning my-4" data-dismiss="modal">Close</button>
+
+{{ form_end(edit_form) }}
