@@ -57,15 +57,15 @@
                                 <p class="bg-info text-white mb-3 p-3">Please let us know whether you and any accompanying person plan to attend the following events (indicate the number of people including yourself)</p>
                                 <div class="row mb-2 border-bottom pb-2">
                                     <div class="col-md-5 text-muted">Conference dinner:</div>
-                                    <div class="col-md-7 text-large"><strong>{{ user.dinner }}</strong></div>
+                                    <div class="col-md-7 text-large"><strong>{% if user.dinner is not null %}{{ user.dinner }}{% else %}0{% endif %}</strong></div>
                                 </div>
                                 <div class="row mb-2 border-bottom pb-2">
                                     <div class="col-md-5 text-muted">Guided visit to Morelia:</div>
-                                    <div class="col-md-7 text-large"><strong>{{ user.morelia }}</strong></div>
+                                    <div class="col-md-7 text-large"><strong>{% if user.morelia is not null %}{{ user.morelia }}{% else %}0{% endif %}</strong></div>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-5 text-muted">Guided visit to Pátzcuaro:</div>
-                                    <div class="col-md-7 text-large"><strong>{{ user.patzcuaro }}</strong></div>
+                                    <div class="col-md-7 text-large"><strong>{% if user.patzcuaro is not null %}{{ user.patzcuaro }}{% else %}0{% endif %}</strong></div>
                                 </div>
                                 <button type="button" class="btn btn-outline-primary btn-sm mt-2" data-toggle="modal" data-target="#visitModal">
                                     <i class="fa fa-pencil" aria-hidden="true"></i> Change
