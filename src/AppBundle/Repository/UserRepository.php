@@ -93,7 +93,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT count(u.patzcuaro)  FROM AppBundle:User u'
+                'SELECT sum(u.patzcuaro)  FROM AppBundle:User u'
             )
             ->getSingleScalarResult();
     }
