@@ -34,60 +34,86 @@
             <div class="col-md-4 col-sm-12">
                 <h4 class="text-secondary">Last registrations</h4>
                 {% if last_registrations %}
-                <table class="table table-sm small">
-                    {% for registry in last_registrations %}
-                        <tr><td>{{ registry.createdAt|date('F d, Y') }}</td><td><a href="{{ path('admin_show', { 'slug': registry.slug }) }}">{{ registry.name }} {{ registry.surname }}</a></td><td>{{ registry.affiliation }}</td></tr>
-                    {% endfor %}
-                </table>
+                    <table class="table table-sm small">
+                        {% for registry in last_registrations %}
+                            <tr><td>{{ registry.createdAt|date('F d, Y') }}</td><td><a href="{{ path('admin_show', { 'slug': registry.slug }) }}">{{ registry.name }} {{ registry.surname }}</a></td><td>{{ registry.affiliation }}</td></tr>
+                        {% endfor %}
+                    </table>
                 {% else %}
                     <p class="text-secondary">There are no new registries since your last login.</p>
                 {% endif %}
             </div>
         </div>
 
-        <div class="row my-4">
+        <div class="row mb-4">
             <div class="col-md-2">
-                <div class="card">
-                    <div class="card-body text-info">
-                        Records
-                        <h1>{{ users|length }}</h1>
+                <div class="card text-muted">
+                    <div class="card-body">
+                        Dinner total
+                        <h3 class="text-secondary">{{ totalDinner }}</h3>
                     </div>
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="card">
-                    <div class="card-body text-info">
-                        Students
-                        <h1>{{ totalStudents }}</h1>
+                <div class="card text-muted">
+                    <div class="card-body">
+                        Morelia visit total
+                        <h3 class="text-secondary">{{ totalMorelia }}</h3>
                     </div>
                 </div>
             </div>
             <div class="col-md-2">
-                <div class="card">
-                    <div class="card-body text-info">
-                        Talks
-                        <h1>{{ totalTalks }}</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <div class="card-body text-info">
-                        Posters
-                        <h1>{{ totalPosters }}</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <div class="card-body text-info">
-                        Payments
-                        <h1>{{ totalPayments }}</h1>
+                <div class="card text-muted">
+                    <div class="card-body">
+                        Tzintzuntzan total
+                        <h3 class="text-secondary">{{ totalPatzcuaro }}</h3>
                     </div>
                 </div>
             </div>
         </div>
 
+    <div class="row mb-4">
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-info">
+                    Records
+                    <h1>{{ users|length }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-info">
+                    Students
+                    <h1>{{ totalStudents }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-info">
+                    Talks
+                    <h1>{{ totalTalks }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-info">
+                    Posters
+                    <h1>{{ totalPosters }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-info">
+                    Payments
+                    <h1>{{ totalPayments }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Modal -->
         <div class="modal fade" id="emailsModal" tabindex="-1" role="dialog" aria-labelledby="emailsModalLabel" aria-hidden="true">

@@ -71,6 +71,32 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->getSingleScalarResult();
     }
 
+    public function countDinner()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT sum(u.dinner)  FROM AppBundle:User u'
+            )
+            ->getSingleScalarResult();
+    }
+
+    public function countMorelia()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT sum(u.morelia)  FROM AppBundle:User u'
+            )
+            ->getSingleScalarResult();
+    }
+
+    public function countPatzcuaro()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(u.patzcuaro)  FROM AppBundle:User u'
+            )
+            ->getSingleScalarResult();
+    }
 
 }
 

@@ -39,6 +39,10 @@ class AdminController extends Controller
         $payments = $em->getRepository('AppBundle:Prometeo')->findPaymentsbyDate($lastLogin);
         $last_registrations = $em->getRepository('AppBundle:User')->findUsersbyDate($lastLogin);
 
+        $totalDinner = $em->getRepository('AppBundle:User')->countDinner();
+        $totalMorelia = $em->getRepository('AppBundle:User')->countMorelia();
+        $totalPatzcuaro = $em->getRepository('AppBundle:User')->countPatzcuaro();
+
         return $this->render('admin/index.html.twig', array(
             'totalStudents' => $totalStudents,
             'totalTalks' => $totalTalks,
@@ -47,6 +51,9 @@ class AdminController extends Controller
             'last_registrations' => $last_registrations,
             'payments' => $payments,
             'users' => $users,
+            'totalDinner' => $totalDinner,
+            'totalMorelia' => $totalMorelia,
+            'totalPatzcuaro' => $totalPatzcuaro,
         ));
     }
 
