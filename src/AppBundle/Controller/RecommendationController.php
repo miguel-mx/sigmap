@@ -43,8 +43,8 @@ class RecommendationController extends Controller
     {
         // TODO: Especificar fecha límite
         $now = new \DateTime();
-        $deadline = new \DateTime('2018-05-27');
-        if($now > $deadline)
+        $deadline = new \DateTime('2018-05-28');
+        if($now >= $deadline)
             return $this->render(':recommendation:closed.html.twig');
 
         $em = $this->getDoctrine()->getManager();

@@ -50,9 +50,9 @@ class SupportController extends Controller
 
         // TODO: Especificar fecha límite
         $now = new \DateTime();
-        $deadline = new \DateTime('2018-05-19');
+        $deadline = new \DateTime('2018-05-20');
 
-        if($now > $deadline)
+        if($now >= $deadline)
             return $this->render(':support:closed.html.twig');
 
         // If support, redirects to edit

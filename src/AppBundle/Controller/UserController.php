@@ -105,8 +105,8 @@ class UserController extends Controller
 
         // TODO: Especificar fecha límite
         $now = new \DateTime();
-        $deadline = new \DateTime('2018-06-01');
-        if($now > $deadline)
+        $deadline = new \DateTime('2018-06-02');
+        if($now >= $deadline)
             return $this->render(':user:closed.html.twig');
 
         $editForm = $this->createForm('AppBundle\Form\TalkType', $user);

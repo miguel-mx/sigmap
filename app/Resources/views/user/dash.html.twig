@@ -257,7 +257,7 @@
                             </p>
                         {% endif %}
 
-                        {% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}
+                        {% if "now"|date('Y-m-d') >= '2018-06-02'|date('Y-m-d') %}
                             <button type="button" class="btn btn-outline-primary" disabled>
                                 <i class="fa fa-check" ></i> Abstract</button>
                         {% else %}
@@ -298,7 +298,7 @@
 
                         <p>The deadline for registering a poster is June 1, 2018.</p>
 
-                        {% if "now"|date('Y-m-d') > '2018-06-01'|date('Y-m-d') %}
+                        {% if "now"|date('Y-m-d') >= '2018-06-02'|date('Y-m-d') %}
                             <button type="button" class="btn btn-outline-primary" disabled>
                                 <i class="fa fa-check" ></i> Poster</button>
                         {% else %}
