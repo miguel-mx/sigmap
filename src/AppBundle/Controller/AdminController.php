@@ -59,6 +59,23 @@ class AdminController extends Controller
 
 
     /**
+     * Lists all Talks.
+     *
+     * @Route("/talks", name="admin_talks")
+     * @Method("GET")
+     */
+    public function talksAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $speakers = $em->getRepository('AppBundle:User')->findAllSpeakers();
+
+        return $this->render('admin/talks.html.twig', array(
+            'speakers' => $speakers,
+        ));
+    }
+
+    /**
      * Finds and displays a User entity.
      *
      * @Route("/{slug}", name="admin_show")

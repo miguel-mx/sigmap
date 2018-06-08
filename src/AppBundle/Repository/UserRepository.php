@@ -12,7 +12,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT c FROM AppBundle:User u WHERE u.ustudent = true ORDER BY u.name ASC'
+                'SELECT c FROM AppBundle:User c WHERE c.ustudent = true ORDER BY c.name ASC'
             )
             ->getResult();
     }
@@ -21,7 +21,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT c FROM AppBundle:User u WHERE u.title = true ORDER BY u.name ASC'
+                'SELECT c FROM AppBundle:User c WHERE c.title IS NOT NULL ORDER BY c.name ASC'
             )
             ->getResult();
     }
