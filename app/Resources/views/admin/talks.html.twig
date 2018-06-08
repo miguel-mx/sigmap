@@ -7,7 +7,7 @@
             <div class="card-body">
                 <p class="card-text lead">{{ speaker.name }} {{ speaker.surname }} <small>{{ speaker.affiliation }}</small></p>
                 <h4>{{ speaker.title }}</h4>
-                <p class="card-text">{{ speaker.abstract }}</p>
+                <p class="card-text">{{ speaker.abstract|raw }}</p>
             </div>
         </div>
 
