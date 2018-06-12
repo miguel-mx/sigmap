@@ -1,0 +1,15 @@
+SIGMAP 2018 Talks
+
+{% for speaker in speakers %}
+{{ speaker.name }} {{ speaker.surname }}
+{{ speaker.affiliation }}
+
+{{ speaker.title }}
+
+{{ speaker.abstract|raw }}
+
+----------------------------------------------------------------------
+{% endfor %}
+
+
+
